@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>NobleUI Responsive Bootstrap 4 Dashboard Template</title>
@@ -18,6 +19,7 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{asset('backend')}}/assets/css/demo_1/style.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('backend')}}/assets/images/favicon.png" />
 </head>
@@ -687,6 +689,7 @@
     <script src="{{asset('backend')}}/assets/vendors/feather-icons/feather.min.js"></script>
     <script src="{{asset('backend')}}/assets/js/template.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <!-- endinject -->
     <!-- custom js for this page -->
     <script src="{{asset('backend')}}/assets/js/dashboard.js"></script>

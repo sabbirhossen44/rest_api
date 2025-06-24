@@ -27,5 +27,9 @@ Route::post('/user/photo/update/{id}', [UserController::class, 'user_photo_updat
 
 // banner part
 Route::resource('/banner', BannerController::class);
+Route::post('/banner/status', [BannerController::class, 'banner_status']);
+Route::get('/banner/delete/{id}', [BannerController::class, 'banner_delete'])->name('banner.delete');
+
+// 
 
 require __DIR__.'/auth.php';

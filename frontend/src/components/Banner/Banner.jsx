@@ -1,10 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
 import Bannerimg from '../../assets/banner.png';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Banner = () => {
     const [activeDot, setActiveDot] = useState(0);
+    const [banners, setBanners] = useState([]);
+    useEffect(() => {
+        fetchBanner();
+    }, []);
+    const fetchBanner = async () => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/banner`);
+            if (response && response.data.status === true) {
+                setBanners(response.data.banners);
+            }
+        } catch (error) {
+            console.error("User load error:", error);
+        }
+    }
     const settings = {
         dots: true,
         infinite: true,
@@ -59,24 +74,21 @@ const Banner = () => {
                 <span style={{ fontSize: "16px", }}>0</span>{i + 1}
             </div>
         )
+
     };
     return (
         <>
             <div className="">
                 <Link to="/shop">
                     <Slider {...settings}>
-
-                        <div className='w-full'>
-                            <img src={Bannerimg} alt="" className='w-full h-[597px]' />
-                        </div>
-
-                        <div className='w-full'>
-                            <Link to="/shop"><img src={Bannerimg} alt="" className='w-full h-[597px]' /></Link>
-                        </div>
-                        <div className='w-full'>
-                            <Link to="/shop"><img src={Bannerimg} alt="" className='w-full h-[597px]' /></Link>
-                        </div>
-
+                        {
+                            banners.map((banner) => (
+                                <div className='w-full'>
+                                    <Link to="/shop"> <img src={banner.photo_path} alt="" className='w-full h-[597px]' /></Link>
+                                </div>
+                            ))
+                        }
+                       
 
                     </Slider>
                 </Link>
