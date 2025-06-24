@@ -51,25 +51,23 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false"
                             aria-controls="emails">
-                            <i class="link-icon" data-feather="mail"></i>
-                            <span class="link-title">Email</span>
+                            <i class="link-icon" data-feather="users"></i>
+                            <span class="link-title">Users</span>
                             <i class="link-arrow" data-feather="chevron-down"></i>
                         </a>
                         <div class="collapse" id="emails">
                             <ul class="nav sub-menu">
                                 <li class="nav-item">
-                                    <a href="pages/email/inbox.html" class="nav-link">Inbox</a>
+                                    <a href="{{route('user.info')}}" class="nav-link">Profile</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/email/read.html" class="nav-link">Read</a>
+                                    <a href="{{route('user.list')}}" class="nav-link">New User</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="pages/email/compose.html" class="nav-link">Compose</a>
-                                </li>
+                               
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="pages/apps/chat.html" class="nav-link">
                             <i class="link-icon" data-feather="message-square"></i>
                             <span class="link-title">Chat</span>
@@ -80,80 +78,27 @@
                             <i class="link-icon" data-feather="calendar"></i>
                             <span class="link-title">Calendar</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item nav-category">Components</li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#uiComponents" role="button"
                             aria-expanded="false" aria-controls="uiComponents">
                             <i class="link-icon" data-feather="feather"></i>
-                            <span class="link-title">UI Kit</span>
+                            <span class="link-title">Category</span>
                             <i class="link-arrow" data-feather="chevron-down"></i>
                         </a>
                         <div class="collapse" id="uiComponents">
                             <ul class="nav sub-menu">
                                 <li class="nav-item">
-                                    <a href="pages/ui-components/alerts.html" class="nav-link">Alerts</a>
+                                    <a href="{{route('category.index')}}" class="nav-link">Categories</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/ui-components/badges.html" class="nav-link">Badges</a>
+                                    <a href="{{route('category.trash')}}" class="nav-link">Trash List</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/ui-components/breadcrumbs.html" class="nav-link">Breadcrumbs</a>
+                                    <a href="{{route('subCategory.index')}}" class="nav-link">Sub Category</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/buttons.html" class="nav-link">Buttons</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/button-group.html" class="nav-link">Button group</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/cards.html" class="nav-link">Cards</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/carousel.html" class="nav-link">Carousel</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/collapse.html" class="nav-link">Collapse</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/dropdowns.html" class="nav-link">Dropdowns</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/list-group.html" class="nav-link">List group</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/media-object.html" class="nav-link">Media object</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/modal.html" class="nav-link">Modal</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/navs.html" class="nav-link">Navs</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/navbar.html" class="nav-link">Navbar</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/pagination.html" class="nav-link">Pagination</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/popover.html" class="nav-link">Popovers</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/progress.html" class="nav-link">Progress</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/scrollbar.html" class="nav-link">Scrollbar</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/scrollspy.html" class="nav-link">Scrollspy</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/spinners.html" class="nav-link">Spinners</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/ui-components/tooltips.html" class="nav-link">Tooltips</a>
-                                </li>
+                                
                             </ul>
                         </div>
                     </li>

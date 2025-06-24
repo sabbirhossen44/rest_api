@@ -59,6 +59,42 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Password Change</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{{route('user.password', $user->id)}}" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="" class="form-label">Old Password</label>
+                            <input type="password" name="old_pass" class="form-control" id="">
+                            @error('old_pass')
+                                <strong class="text-danger">{{$message}}</strong>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">New Password</label>
+                            <input type="password" name="password" class="form-control" id="">
+                            @error('password')
+                                <strong class="text-danger">{{$message}}</strong>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Conf Password</label>
+                            <input type="password" name="password_confirmation" class="form-control" id="">
+                            @error('password_confirmation')
+                                <strong class="text-danger">{{$message}}</strong>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 @section('footer_script')
@@ -79,6 +115,28 @@
                 position: "top-end",
                 icon: "success",
                 title: "{{ session('user_photo') }}",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
+    @if (session('user_password'))
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "{{ session('user_password') }}",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
+    @if (session('user_password_error'))
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "info",
+                title: "{{ session('user_password_error') }}",
                 showConfirmButton: false,
                 timer: 1500
             });
