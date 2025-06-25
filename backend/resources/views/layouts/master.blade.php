@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>NobleUI Responsive Bootstrap 4 Dashboard Template</title>
@@ -17,11 +17,18 @@
     <link rel="stylesheet" href="{{asset('backend')}}/assets/fonts/feather-font/css/iconfont.css">
     <link rel="stylesheet" href="{{asset('backend')}}/assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <!-- endinject -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+        integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{asset('backend')}}/assets/css/demo_1/style.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('backend')}}/assets/images/favicon.png" />
+    @yield('style')
 </head>
 
 <body>
@@ -63,7 +70,7 @@
                                 <li class="nav-item">
                                     <a href="{{route('user.list')}}" class="nav-link">New User</a>
                                 </li>
-                               
+
                             </ul>
                         </div>
                     </li>
@@ -98,7 +105,16 @@
                                 <li class="nav-item">
                                     <a href="{{route('subCategory.index')}}" class="nav-link">Sub Category</a>
                                 </li>
-                                
+                                <li class="nav-item">
+                                    <a href="{{route('variation')}}" class="nav-link">Variation</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('tags')}}" class="nav-link">Tags</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('brand')}}" class="nav-link">Brand</a>
+                                </li>
+
                             </ul>
                         </div>
                     </li>
@@ -106,16 +122,16 @@
                         <a class="nav-link" data-toggle="collapse" href="#advancedUI" role="button"
                             aria-expanded="false" aria-controls="advancedUI">
                             <i class="link-icon" data-feather="anchor"></i>
-                            <span class="link-title">Advanced UI</span>
+                            <span class="link-title">Products</span>
                             <i class="link-arrow" data-feather="chevron-down"></i>
                         </a>
                         <div class="collapse" id="advancedUI">
                             <ul class="nav sub-menu">
                                 <li class="nav-item">
-                                    <a href="pages/advanced-ui/cropper.html" class="nav-link">Cropper</a>
+                                    <a href="{{route('Product.add')}}" class="nav-link">Add Product</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/advanced-ui/owl-carousel.html" class="nav-link">Owl carousel</a>
+                                    <a href="{{route('product.list')}}" class="nav-link">Product List</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="pages/advanced-ui/sweet-alert.html" class="nav-link">Sweet Alert</a>
@@ -636,6 +652,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <!-- endinject -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+        integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
     <!-- custom js for this page -->
     <script src="{{asset('backend')}}/assets/js/dashboard.js"></script>
     <script src="{{asset('backend')}}/assets/js/datepicker.js"></script>

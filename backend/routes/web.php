@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\VariationControler;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserController;
@@ -46,5 +49,34 @@ Route::get('/category/restore/{id}', [CategoryController::class, 'category_resto
 // sub category
 Route::resource('/subCategory', SubCategoryController::class);
 Route::get('/subCategory/delete/{id}', [SubCategoryController::class , 'subCategory_delete'])->name('subCategory.delete');
+
+
+// inventory
+Route::get('/variation', [VariationControler::class, 'variation'])->name('variation');
+Route::post('/color/store', [VariationControler::class, 'color_store'])->name('color.store');
+Route::get('/color/delete/{id}', [VariationControler::class, 'color_delete'])->name('color.delete');
+Route::post('/size/store', [VariationControler::class, 'size_store'])->name('size.store');
+Route::get('/size/delete/{id}', [VariationControler::class, 'size_delete'])->name('size.delete');
+Route::get('/tags',[VariationControler::class, 'tags'])->name('tags');
+Route::post('/tag/store', [VariationControler::class, 'tag_store'])->name('tag.store');
+Route::get('/tag/delete/{id}', [VariationControler::class, 'tag_delete'])->name('tag.delete');
+Route::get('/brand',[VariationControler::class, 'brand'])->name('brand');
+Route::post('/brand/store', [VariationControler::class, 'brand_store'])->name('brand.store');
+Route::get('/brand/delete/{id}', [VariationControler::class, 'brand_delete'])->name('brand.delete');
+
+// product
+Route::get('/Product/add', [ProductController::class, 'Product_add'])->name('Product.add');
+Route::post('/getsubCategory', [ProductController::class, 'getsubCategory']);
+Route::post('/product/store', [ProductController::class, 'product_store'])->name('product.store');
+Route::get('/product/list', [ProductController::class, 'product_list'])->name('product.list');
+Route::post('/product/getstatus', [ProductController::class, 'product_getstatus']);
+Route::post('/product/discount30', [ProductController::class, 'product_discount30']);
+Route::post('/product/discount50', [ProductController::class, 'product_discount50']);
+Route::post('/product/discount70', [ProductController::class, 'product_discount70']);
+
+// inventory
+Route::get('/inventory/{id}', [InventoryController::class, 'inventory'])->name('inventory');
+Route::post('/inventory/store/{id}', [InventoryController::class, 'inventory_store'])->name('inventory.store');
+Route::get('/inventory/delete/{id}', [InventoryController::class, 'inventory_delete'])->name('inventory.delete');
 
 require __DIR__.'/auth.php';
