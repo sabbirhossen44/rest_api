@@ -9,19 +9,23 @@ import { FaCartShopping } from "react-icons/fa6";
 import Dropdown from '../Layouts/Dropdown';
 import Cart from '../../assets/cart.png';
 import { ImCross } from "react-icons/im";
+import api from '../../Http';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Header = () => {
+    const navigate = useNavigate();
     const ref = useRef();
     const userRef = useRef();
     const cartRef = useRef();
     const [show, setShow] = useState(false);
     const [userShow, setUserShow] = useState(false);
     const [cartrShow, setCartShow] = useState(false);
+    const [category, setCategory] = useState([]);
     useEffect(() => {
         document.body.addEventListener('click', (e) => {
-            if (ref.current.contains(e.target)) {
+            if (ref.current && ref.current.contains(e.target)) {
                 setShow(true);
             } else {
                 setShow(false);
@@ -37,7 +41,16 @@ const Header = () => {
                 setCartShow(false);
             }
         })
+        fetchCategory();
     })
+    const fetchCategory = async () =>{
+        const response = await api.get('/categorys');
+        if (response.data.status == true) {
+            setCategory(response.data.categories);
+        }else{
+            console.log('Something is wrong!')
+        }
+    }
     return (
         <>
             <div className=" bg-[#F5F5F3] py-6">
@@ -50,12 +63,11 @@ const Header = () => {
                             </div>
                             {show && (
                                 <ul className='absolute z-50 top-[40px] w-[263px] bg-black text-white/70'>
-                                    <li className='py-4 px-5 border-b-[1px] border-[#2D2D2D] hover:text-white hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white cursor-pointer'>Accesories</li>
-                                    <li className='py-4 px-5 border-b-[1px] border-[#2D2D2D] hover:text-white hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white cursor-pointer'>Furniture</li>
-                                    <li className='py-4 px-5 border-b-[1px] border-[#2D2D2D] hover:text-white hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white cursor-pointer'>Electronics</li>
-                                    <li className='py-4 px-5 border-b-[1px] border-[#2D2D2D] hover:text-white hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white cursor-pointer'>Clothes</li>
-                                    <li className='py-4 px-5 border-b-[1px] border-[#2D2D2D] hover:text-white hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white cursor-pointer'>Bags</li>
-                                    <li className='py-4 px-5 border-b-[1px] border-[#2D2D2D] hover:text-white hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white cursor-pointer'>Home appliances</li>
+                                    {
+                                        category && category.map((data, index)=>(
+                                            <li key={index} onClick={()=> navigate(`/shop?category=${data.id}`)} className='py-4 px-5 border-b-[1px] border-[#2D2D2D] hover:text-white hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white cursor-pointer' value={data.id}>{data.name}</li>
+                                        ))
+                                    }
                                 </ul>
                             )}
                         </Dropdown>

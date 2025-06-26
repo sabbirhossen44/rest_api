@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
 import Bannerimg from '../../assets/banner.png';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../Http';
 
 const Banner = () => {
     const [activeDot, setActiveDot] = useState(0);
@@ -12,7 +12,8 @@ const Banner = () => {
     }, []);
     const fetchBanner = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/banner`);
+            const response = await api.get(`/banner`);
+            // const response = await axios.get(`http://127.0.0.1:8000/api/banner`);
             if (response && response.data.status === true) {
                 setBanners(response.data.banners);
             }
@@ -40,8 +41,14 @@ const Banner = () => {
                 }}
             >
                 <ul style={{ margin: "0px" }}>
-                    {dots.map((item) => {
-                        return <li style={{ display: "block", marginTop: "14px" }}>{item}</li>
+                    {/* {dots.map((item, index) => {
+                        return <li style={{ display: "block", marginTop: "14px" }} key={index}>{item}</li>
+                    })} */}
+                    {dots.map((item, index) => {
+                        return React.cloneElement(item, {
+                            key: index,
+                            style: { display: "block", marginTop: "14px" }
+                        });
                     })}
                 </ul>
             </div>
@@ -84,11 +91,11 @@ const Banner = () => {
                         {
                             banners.map((banner) => (
                                 <div className='w-full'>
-                                    <Link to="/shop"> <img src={banner.photo_path} alt="" className='w-full h-[597px]' /></Link>
+                                    <img src={banner.photo_path} alt="" className='w-full h-[597px]' />
                                 </div>
                             ))
                         }
-                       
+
 
                     </Slider>
                 </Link>

@@ -16,7 +16,7 @@ const Shop = () => {
                 <Container>
                     <Breadcrumbs />
                     <Flex className="mt-32 gap-10">
-                        <div className="w-1/4 bg-teal-200">
+                        <div className="w-1/4 shadow-xl p-3">
                             <LeftSidebar/>
                         </div>
                         <div className="w-3/4">

@@ -4,17 +4,19 @@ import Badge from './Badge';
 import { FaHeart } from "react-icons/fa6";
 import { LuRefreshCw } from "react-icons/lu";
 import { FaShoppingCart } from "react-icons/fa";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 
 
-const Product = ({badge, product_img, product_name, product_price, product_wish ,product_compare, product_card, className}) => {
+
+const Product = ({badge,discoutn, product_img, product_name, product_price, product_wish ,product_compare, product_card, className}) => {
     return (
         <>
             <div className={`${className}`}>
                 <div className="w-[370px] h-[370px] object-cover relative group overflow-y-hidden ease-in duration-400">
                     <img src={product_img} className='w-full h-full' alt="" />
                     {
-                        badge && <Badge discount='10%'/>
+                        badge && <Badge discount={discoutn}/>
                     }
                     <div className="absolute ease-in duration-300 left-0 top-full group-hover:top-1/2 w-full h-1/2 bg-white">
                         <div className="flex flex-col justify-between items-end p-7 h-full">
@@ -32,7 +34,7 @@ const Product = ({badge, product_img, product_name, product_price, product_wish 
                 </div>
                 <div className="flex justify-between w-[360px] items-center mt-4">
                     <h3 >{product_name}</h3>
-                    <span>{product_price}</span>
+                    <span className='flex items-center gap-1'><span><FaBangladeshiTakaSign /></span>{product_price}</span>
                 </div>
             </div>
         </>

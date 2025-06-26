@@ -11,4 +11,7 @@ class Product extends Model
     public function pro_to_cate(){
         return $this->belongsTo(Category::class, 'category_id');
     }
+    public function pro_to_inv(){
+        return $this->hasMany(Inventory::class, 'product_id');
+    }
 }
