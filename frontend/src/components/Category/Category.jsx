@@ -20,11 +20,14 @@ const Category = () => {
     categories();
   });
   const handleSidebar = (value) => {
-    navigate(`/shop?category=${value}`)
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set('category', value);
+    navigate(`/shop?${queryParams.toString()}`)
   };
   return (
     <>
       <LeftSidebarContent
+        usestate = 'true'
         title="Shop by Category"
         items={items}
         handleSidebar={handleSidebar}

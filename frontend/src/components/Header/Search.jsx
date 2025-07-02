@@ -9,7 +9,9 @@ const Search = () => {
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState('');
     const hendelSearch = () => {
-        navigate(`/shop?search=${searchText}`)
+        const queryParams = new URLSearchParams(location.search);
+        queryParams.set('search', searchText);
+        navigate(`/shop?${queryParams.toString()}`)
     }
     return (
         <div className='w-[600px] bg-white flex justify-between  shadow-sm rounded-md items-center'>

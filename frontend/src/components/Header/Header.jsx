@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Container from '../Layouts/Container'
 import Flex from '../Layouts/Flex'
 import { FaBarsStaggered } from "react-icons/fa6";
@@ -11,10 +11,13 @@ import Cart from '../../assets/cart.png';
 import { ImCross } from "react-icons/im";
 import api from '../../Http';
 import { useNavigate } from 'react-router-dom';
+import { AdminAuthContext } from '../Context/AdminAuth';
 
 
 
 const Header = () => {
+    const { logout } = useContext(AdminAuthContext);
+    const [user, setUser] = useState(false);
     const navigate = useNavigate();
     const ref = useRef();
     const userRef = useRef();
@@ -43,13 +46,24 @@ const Header = () => {
         })
         fetchCategory();
     })
-    const fetchCategory = async () =>{
+    useEffect(() => {
+        const data = localStorage.getItem('adminInfo');
+        if (data) {
+            setUser(true);
+        }
+    }, []);
+    const fetchCategory = async () => {
         const response = await api.get('/categorys');
         if (response.data.status == true) {
             setCategory(response.data.categories);
-        }else{
+        } else {
             console.log('Something is wrong!')
         }
+    }
+    const handleClick = (value) => {
+        const queryParams = new URLSearchParams(location.search);
+        queryParams.set('search', value);
+        navigate(`/shop?${queryParams.toString()}`);
     }
     return (
         <>
@@ -64,8 +78,8 @@ const Header = () => {
                             {show && (
                                 <ul className='absolute z-50 top-[40px] w-[263px] bg-black text-white/70'>
                                     {
-                                        category && category.map((data, index)=>(
-                                            <li key={index} onClick={()=> navigate(`/shop?category=${data.id}`)} className='py-4 px-5 border-b-[1px] border-[#2D2D2D] hover:text-white hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white cursor-pointer' value={data.id}>{data.name}</li>
+                                        category && category.map((data, index) => (
+                                            <li key={index} onClick={() => handleClick(data.id)} className='py-4 px-5 border-b-[1px] border-[#2D2D2D] hover:text-white hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white cursor-pointer' value={data.id}>{data.name}</li>
                                         ))
                                     }
                                 </ul>
@@ -81,9 +95,13 @@ const Header = () => {
                                 {
                                     userShow && (
                                         <ul className='absolute z-50 top-[40px] right-0 w-[200px] text-primary bg-white shadow-md shadow-[#F5F5F3] text-center text-white/70'>
-                                            <li className='py-4 px-5 border-b-[1px] text-primary active   hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white active:bg-primary  cursor-pointer'>My Account</li>
-                                            <li className='py-4 px-5 border-b-[1px] text-primary   hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white active:bg-primary  cursor-pointer'>Log Out</li>
-
+                                            {
+                                                user ?
+                                                    <li onClick={() => navigate('/admin/dashboard')} className='py-4 px-5 border-b-[1px] text-primary active   hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white active:bg-primary  cursor-pointer'>My Account</li>
+                                                    :
+                                                    <li onClick={() => navigate('/login')} className='py-4 px-5 border-b-[1px] text-primary active   hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white active:bg-primary  cursor-pointer'>Login</li>
+                                            }
+                                            <li className='py-4 px-5 border-b-[1px] text-primary   hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white active:bg-primary  cursor-pointer' onClick={logout}>Log Out</li>
                                         </ul>
                                     )
                                 }
@@ -97,7 +115,7 @@ const Header = () => {
                                         <div className="w-[360px] z-50 absolute  top-[40px] right-0 bg-white shadow-md shadow-[#F5F5F3] text-primary">
                                             <Flex className="justify-between p-5 items-center  border-b-[1px] border-[#F5F5F3]">
                                                 <div className="">
-                                                    <img src={Cart} alt="" className='w-[80px] h-[80px] object-cover'/>
+                                                    <img src={Cart} alt="" className='w-[80px] h-[80px] object-cover' />
                                                 </div>
                                                 <div className="">
                                                     <h3 className='font-bold text-primary text-base'>Black Smart Watch</h3>
@@ -109,7 +127,7 @@ const Header = () => {
                                             </Flex>
                                             <Flex className="justify-between p-5 items-center  border-b-[1px] border-[#F5F5F3]">
                                                 <div className="">
-                                                    <img src={Cart} alt="" className='w-[80px] h-[80px] object-cover'/>
+                                                    <img src={Cart} alt="" className='w-[80px] h-[80px] object-cover' />
                                                 </div>
                                                 <div className="">
                                                     <h3 className='font-bold text-primary text-base'>Black Smart Watch</h3>
@@ -119,7 +137,7 @@ const Header = () => {
                                                     <button><ImCross /></button>
                                                 </div>
                                             </Flex>
-                                            
+
                                             <div className="p-5">
                                                 <h3 className='text-[#767676] text-base'>Subtotal: <span className='text-primary font-bold'>$44.00</span></h3>
                                                 <div className="flex gap-5">

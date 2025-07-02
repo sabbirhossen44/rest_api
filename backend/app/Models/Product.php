@@ -14,4 +14,8 @@ class Product extends Model
     public function pro_to_inv(){
         return $this->hasMany(Inventory::class, 'product_id');
     }
+    public function pro_to_brand(){
+        return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
 }

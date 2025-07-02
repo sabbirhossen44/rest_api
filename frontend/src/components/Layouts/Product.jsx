@@ -5,11 +5,10 @@ import { FaHeart } from "react-icons/fa6";
 import { LuRefreshCw } from "react-icons/lu";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import { Link, useNavigate } from 'react-router-dom';
 
-
-
-
-const Product = ({badge,discoutn, product_img, product_name, product_price, product_wish ,product_compare, product_card, className}) => {
+const Product = ({badge,discoutn, product_img, product_name, product_price, product_wish ,product_compare, product_card, className, slug}) => {
+    const navigate = useNavigate();
     return (
         <>
             <div className={`${className}`}>
@@ -27,13 +26,13 @@ const Product = ({badge,discoutn, product_img, product_name, product_price, prod
                                 <button className='flex items-center gap-3 hover:font-bold text-secondary text-base font-medium hover:text-primary ease-in duration-300' value={product_compare}>Compare <span className='text-primary font-bold text-xl'><LuRefreshCw /></span></button>
                             </div>
                             <div className="">
-                                <button className='flex items-center gap-3 hover:font-bold text-secondary text-base font-medium hover:text-primary ease-in duration-300' value={product_card}>Add to Cart <span className='text-primary font-bold text-xl'><FaShoppingCart /></span></button>
+                                <button onClick={() => navigate(`/product_details/${slug}`)} className='flex items-center gap-3 hover:font-bold text-secondary text-base font-medium hover:text-primary ease-in duration-300' value={product_card}>Add to Cart <span className='text-primary font-bold text-xl'><FaShoppingCart /></span></button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="flex justify-between w-[360px] items-center mt-4">
-                    <h3 >{product_name}</h3>
+                    <h3 onClick={() => navigate(`/product_details/${slug}`)} className='cursor-pointer hover:text-teal-400 font-bold ease-in duration-300' >{product_name}</h3>
                     <span className='flex items-center gap-1'><span><FaBangladeshiTakaSign /></span>{product_price}</span>
                 </div>
             </div>

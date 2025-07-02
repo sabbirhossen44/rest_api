@@ -3,8 +3,8 @@ import Flex from './Flex'
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 
-const LeftSidebarContent = ({ title, items, handleSidebar }) => {
-    const [show, setShow] = useState(false);
+const LeftSidebarContent = ({ title, items, handleSidebar , usestate }) => {
+    const [show, setShow] = useState(usestate ? {usestate} : false);
     return (
         <>
             <div className="">
@@ -30,7 +30,7 @@ const LeftSidebarContent = ({ title, items, handleSidebar }) => {
                                         onClick={() => handleSidebar(item.id)}
                                         className="py-4 px-5 border-b-[1px] border-slate-200 hover:text-primary text-secondary hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-primary cursor-pointer"
                                     >
-                                        {item.name || item.color_name}
+                                        {item.name || item.color_name || item.brand_name}
                                     </li>
                                 ))
                             }

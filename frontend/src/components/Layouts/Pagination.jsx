@@ -20,9 +20,7 @@ function Items({ currentItems }) {
                             product_img={item.photo}
                             product_name={item.product_name}
                             product_price={`${item.after_discount}`}
-                            product_wish={1}
-                            product_compare={1}
-                            product_card={1}
+                            slug = {item.slug}
                         />
 
 
@@ -40,6 +38,8 @@ const Pagination = ({ itemsPerPage }) => {
     const categoryID = queryParams.get('category');
     const search = queryParams.get('search');
     const color = queryParams.get('color');
+    const brand = queryParams.get('brand');
+    const sort = queryParams.get('sort');
     useEffect(() => {
         const fetchProducts = async () => {
             let url = `/products`
@@ -52,6 +52,12 @@ const Pagination = ({ itemsPerPage }) => {
             }
             if (color && color !== 'undefined') {
                 params.push(`color=${color}`)
+            }
+            if (brand && brand !== 'undefined') {
+                params.push(`brand=${brand}`)
+            }
+            if (sort && sort !== 'undefined') {
+                params.push(`sort=${sort}`)
             }
 
             if (params.length > 0) {
@@ -69,19 +75,15 @@ const Pagination = ({ itemsPerPage }) => {
         }
 
         fetchProducts();
-    }, [categoryID, search, color]);
+    }, [categoryID, search, color ,brand ,sort]);
 
 
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     const currentItems = items.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(items.length / itemsPerPage);
 
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % items.length;
-        console.log(
-            `User requested page number ${event.selected}, which is offset ${newOffset}`
-        );
         setItemOffset(newOffset);
     };
     return (

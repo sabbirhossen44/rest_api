@@ -13,9 +13,11 @@ const Banner = () => {
     const fetchBanner = async () => {
         try {
             const response = await api.get(`/banner`);
-            // const response = await axios.get(`http://127.0.0.1:8000/api/banner`);
             if (response && response.data.status === true) {
                 setBanners(response.data.banners);
+            }
+            else{
+                console.log('Banner Api Error');
             }
         } catch (error) {
             console.error("User load error:", error);
