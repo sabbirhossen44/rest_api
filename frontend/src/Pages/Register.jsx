@@ -19,7 +19,7 @@ const Register = () => {
       const response = await api.post('/customer/register', data);
       toast.success(response.data.message)
       setTimeout(() => {
-        navigate('/dashboard')
+        navigate('/login')
       }, 2000);
     } catch (error) {
       toast.error(error.response.data.message)

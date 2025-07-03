@@ -8,7 +8,7 @@ const AdminSidebar = () => {
   const links = [
     { name: "Dashboard", path: "/admin/dashboard" },
     { name: "Users", path: "/admin/users" },
-    { name: "Settings", path: "/admin/settings" },
+    { name: "Order List", path: "/admin/settings" },
   ];
 
   return (

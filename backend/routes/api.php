@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,14 +33,17 @@ Route::get('/products', [FrontendController::class, 'products']);
 
 // customer
 
-
-
-
 Route::prefix('customer')->group(function () {
     Route::post('/register', [CustomerAuthController::class, 'register']);
     Route::post('/login', [CustomerAuthController::class, 'login']);
+    Route::post('/update', [CustomerAuthController::class, 'update']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', [CustomerAuthController::class, 'logout']);
     });
 });
+
+// cart
+Route::post('/cart/store', [CartController::class, 'cartStore']);
+Route::get('/cart/product/{id}', [CartController::class, 'cartProduct']);
+Route::get('/cart/delete/{id}', [CartController::class, 'cartDelete']);

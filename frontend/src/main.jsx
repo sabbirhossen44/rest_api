@@ -22,6 +22,7 @@ import DashboardLayout from './components/Layouts/DashboardLayout.jsx'
 import AccountDetails from './Pages/Admin/Users.jsx'
 import Users from './Pages/Admin/Users.jsx'
 import Settings from './Pages/Admin/Settings.jsx'
+import ViewCart from './Pages/ViewCart.jsx'
 
 
 const router = createBrowserRouter(
@@ -37,21 +38,13 @@ const router = createBrowserRouter(
       <Route path='/product_details/:slug' element={<Product_Details />} />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
-      {/* <Route path="/dashboard" element={
-        <AdminReqireAuth>
-          <Dashboard />
-        </AdminReqireAuth>
-      } /> */}
-      {/* <Route path="/dashboard" element={
-        <AdminReqireAuth>
-          <Dashboard />
-        </AdminReqireAuth>
-      } /> */}
       <Route path="/admin" element={<AdminReqireAuth><DashboardLayout /></AdminReqireAuth>}>
         <Route path="dashboard" element={<AdminReqireAuth><Dashboard /></AdminReqireAuth>} />
         <Route path="users" element={<AdminReqireAuth><Users /></AdminReqireAuth>} />
         <Route path="settings" element={<AdminReqireAuth><Settings /></AdminReqireAuth>} />
       </Route>
+      <Route path='/viewcart' element={<AdminReqireAuth><ViewCart /></AdminReqireAuth>} />
+
     </Route>
   )
 );

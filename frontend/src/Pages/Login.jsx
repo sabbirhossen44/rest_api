@@ -24,17 +24,17 @@ const Login = () => {
             })
             if (response.data.status == true) {
                 const adminInfo = {
-                    token : response.data.token,
+                    token: response.data.token,
                     admin: response.data,
                 }
                 localStorage.setItem('adminInfo', JSON.stringify(adminInfo));
-                login(adminInfo)
+                login(adminInfo);
                 reset();
                 toast.success('Login successful!');
                 setTimeout(() => {
-                    navigate('/admin/dashboard')
+                    navigate(`/admin/dashboard`)
                 }, 2000);
-            }else{
+            } else {
                 toast.error('Something is Wrong')
             }
 

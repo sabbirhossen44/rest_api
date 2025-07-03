@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import api from '../../Http'
+import { ToastContainer, toast } from 'react-toastify';
 
 const Users = () => {
   const {
@@ -8,12 +10,12 @@ const Users = () => {
     handleSubmit,
     formState: { errors },
   } = useForm()
-  // const [user, setUser] = useState([]);
+  const [user, setUser] = useState([]);
   useEffect(() => {
     const data = localStorage.getItem('adminInfo');
     if (data) {
       const parsedData = JSON.parse(data);
-      // setUser(parsedData.admin.customer);
+      setUser(parsedData.admin.customer);
       const customer = parsedData?.admin?.customer;
 
       setValue('name', customer?.name || '');
@@ -25,10 +27,26 @@ const Users = () => {
     }
   }, [setValue]);
   const onSubmit = async (data) => {
-    console.log(data)
+    try {
+      const response = await api.post('/customer/update', data);
+      const updateUser = {
+        ...user,
+        ...data,
+      }
+      setUser(updateUser);
+      const storeData = JSON.parse(localStorage.getItem('adminInfo'));
+      if (storeData && storeData.admin && storeData.admin.customer) {
+        storeData.admin.customer = updateUser;
+        localStorage.setItem('adminInfo', JSON.stringify(storeData));
+      }
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   }
   return (
     <>
+      <ToastContainer />
       <div>
         <h1 className="text-2xl font-bold">User Management</h1>
         <div className="py-5">

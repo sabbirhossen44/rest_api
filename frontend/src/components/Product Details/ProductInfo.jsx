@@ -5,7 +5,7 @@ import { IoIosStarOutline } from "react-icons/io";
 import api from '../../Http';
 import { useForm } from 'react-hook-form';
 
-
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const ProductInfo = ({ data }) => {
@@ -17,8 +17,17 @@ const ProductInfo = ({ data }) => {
   const [activeSizeId, setActiveSizeId] = useState(null);
   const [sizes, setSize] = useState([]);
   const [stockMsg, setStockMsg] = useState('');
+  const [user, setUser] = useState([]);
+
   const avg = 4;
 
+  useEffect(() => {
+    const data = localStorage.getItem('adminInfo');
+    if (data) {
+      const parsedData = JSON.parse(data);
+      setUser(parsedData?.admin?.customer?.id);
+    }
+  }, [])
   const {
     register,
     handleSubmit,
@@ -64,9 +73,10 @@ const ProductInfo = ({ data }) => {
   useEffect(() => {
     setValue('color_id', selectColor);
     setValue('size_id', activeSizeId);
-  }, [selectColor, activeSizeId, setValue]);
+    setValue('customer_id', user);
+  }, [selectColor, activeSizeId, setValue, user]);
 
-  const onSubmit = (formData) => {
+  const onSubmit = async (formData) => {
     if (!selectColor) {
       alert('Please select a color');
       return;
@@ -75,16 +85,26 @@ const ProductInfo = ({ data }) => {
       alert('Please select a size');
       return;
     }
-
-    console.log('Submit Data:', {
-      ...formData
-    });
+    const data = localStorage.getItem('adminInfo');
+    if (!data) {
+      alert('Please Login first')
+    }
+    try {
+      const response = await api.post('/cart/store', formData);
+      if (response) {
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <>
       <>
+        <ToastContainer />
         <form onSubmit={handleSubmit(onSubmit)}>
           <input type="hidden" value={data.product.id} {...register('product_id')} />
+          <input type="hidden" value={user.id} {...register('customer_id')} />
           <div className="">
             <h2 className='text-3xl font-bold text-primary'>{data.product.product_name}</h2>
             <h4 className='flex items-center text-xl mt-2 text-primary'><FaBangladeshiTakaSign /> {data.product.after_discount} {data.product.discount && <span className='flex items-center ms-6 line-through text-secondary'> <FaBangladeshiTakaSign /> {data.product.price}</span>} </h4>
@@ -165,11 +185,11 @@ const ProductInfo = ({ data }) => {
                     onChange={(e) => setQuantity(Number(e.target.value))}
                     className='w-12 p-2 text-center focus:outline-none text-lg' id="" />
                   <div className="flex flex-col">
-                    <button onClick={() => setQuantity(e => e + 1)} className='flex items-center justify-center w-9 h-6 text-xl border-l border-b text-gray-600 hover:bg-gray-100 rounded-tr-md'>+</button>
-                    <button onClick={() => setQuantity(e => e > 1 ? e - 1 : 1)} className='flex items-center justify-center w-9 h-6 text-xl border-l text-gray-600 hover:bg-gray-100 rounded-tr-md'>-</button>
+                    <h2 onClick={() => setQuantity(e => e + 1)} className='flex items-center justify-center w-9 h-6 text-xl border-l border-b cursor-pointer text-gray-600 hover:bg-gray-100 rounded-tr-md'>+</h2>
+                    <h2 onClick={() => setQuantity(e => e > 1 ? e - 1 : 1)} className='flex items-center justify-center w-9 h-6 text-xl border-l cursor-pointer text-gray-600 hover:bg-gray-100 rounded-tr-md'>-</h2>
                   </div>
                   {errors.quantity && (
-                    <p className="text-red-500 text-sm mt-1">Please enter a valid quantity.</p> // ✅ Error message
+                    <p className="text-red-500 text-sm mt-1">Please enter a valid quantity.</p>
                   )}
                 </div>
 
@@ -195,7 +215,7 @@ const ProductInfo = ({ data }) => {
                   }
                 </div>
                 <div >
-                  <button className=" hover:bg-yellow-500 border border-yellow-500 hover:text-white text-primary py-2.5 text-xl px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                  <button type='button' className=" hover:bg-yellow-500 border border-yellow-500 hover:text-white text-primary py-2.5 text-xl px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-7 text-xl w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>

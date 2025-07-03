@@ -90,7 +90,10 @@ class CustomerAuthController extends Controller
                 ]);
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            return response()->json([
+                'status' => false,
+                'error' => $th->getMessage(),
+            ]);
         }
     }
 }

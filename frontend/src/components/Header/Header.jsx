@@ -7,17 +7,18 @@ import { FaUser } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FaCartShopping } from "react-icons/fa6";
 import Dropdown from '../Layouts/Dropdown';
-import Cart from '../../assets/cart.png';
-import { ImCross } from "react-icons/im";
 import api from '../../Http';
 import { useNavigate } from 'react-router-dom';
 import { AdminAuthContext } from '../Context/AdminAuth';
+import { ToastContainer, toast } from 'react-toastify';
+import CartHeader from '../Cart/CartHeader';
 
 
 
 const Header = () => {
-    const { logout } = useContext(AdminAuthContext);
-    const [user, setUser] = useState(false);
+    const { user, logout, cart, fetchCart } = useContext(AdminAuthContext);
+    // const { logout , user, setUser } = useContext(AdminAuthContext);
+    // const [user, setUser] = useState(true);
     const navigate = useNavigate();
     const ref = useRef();
     const userRef = useRef();
@@ -26,47 +27,102 @@ const Header = () => {
     const [userShow, setUserShow] = useState(false);
     const [cartrShow, setCartShow] = useState(false);
     const [category, setCategory] = useState([]);
+    // useEffect(() => {
+    //     document.body.addEventListener('click', (e) => {
+    //         if (ref.current && ref.current.contains(e.target)) {
+    //             setShow(true);
+    //         } else {
+    //             setShow(false);
+    //         }
+    //         if (userRef.current.contains(e.target)) {
+    //             setUserShow(true);
+    //         } else {
+    //             setUserShow(false);
+    //         }
+    //         if (cartRef.current.contains(e.target)) {
+    //             setCartShow(true);
+    //         } else {
+    //             setCartShow(false);
+    //         }
+    //     })
+    //     fetchCategory();
+    // })
     useEffect(() => {
-        document.body.addEventListener('click', (e) => {
-            if (ref.current && ref.current.contains(e.target)) {
-                setShow(true);
-            } else {
-                setShow(false);
-            }
-            if (userRef.current.contains(e.target)) {
-                setUserShow(true);
-            } else {
-                setUserShow(false);
-            }
-            if (cartRef.current.contains(e.target)) {
-                setCartShow(true);
-            } else {
-                setCartShow(false);
-            }
-        })
-        fetchCategory();
+        fetchCart()
     })
     useEffect(() => {
-        const data = localStorage.getItem('adminInfo');
-        if (data) {
-            setUser(true);
-        }
+        fetchCategory();
+
+        // 🖱️ Body click listener for dropdown close
+        document.body.addEventListener('click', (e) => {
+            setShow(ref.current?.contains(e.target));
+            setUserShow(userRef.current?.contains(e.target));
+            setCartShow(cartRef.current?.contains(e.target));
+        });
     }, []);
+
     const fetchCategory = async () => {
         const response = await api.get('/categorys');
-        if (response.data.status == true) {
+        if (response.data.status) {
             setCategory(response.data.categories);
-        } else {
-            console.log('Something is wrong!')
         }
-    }
+    };
+
     const handleClick = (value) => {
         const queryParams = new URLSearchParams(location.search);
         queryParams.set('search', value);
         navigate(`/shop?${queryParams.toString()}`);
-    }
+    };
+    // useEffect(() => {
+    //     const data = localStorage.getItem('adminInfo');
+    //     if (data) {
+    //         setUser(true);
+    //     }
+    // });
+    // const fetchCategory = async () => {
+    //     const response = await api.get('/categorys');
+    //     if (response.data.status == true) {
+    //         setCategory(response.data.categories);
+    //     } else {
+    //         console.log('Something is wrong!')
+    //     }
+    // }
+    // const handleClick = (value) => {
+    //     const queryParams = new URLSearchParams(location.search);
+    //     queryParams.set('search', value);
+    //     navigate(`/shop?${queryParams.toString()}`);
+    // }
+
+    // useEffect(() => {
+
+    //     const fetchCart = async () => {
+    //         const clind = JSON.parse(localStorage.getItem('adminInfo'));
+    //         if (clind) {
+    //             const id = clind?.admin?.customer?.id;
+    //             try {
+    //                 const res = await api.get(`/cart/product/${id}`);
+    //                 setCart(res.data.customer);
+    //             } catch (error) {
+    //                 toast.error(error.response?.data?.message || 'Something went wrong');
+    //                 setCart([]);
+    //             }
+    //         } else {
+    //             setCart([]);
+    //         }
+    //     };
+
+    //     fetchCart();
+    // }, [user]);
+
+    const handleLogout = () => {
+        logout();  
+        toast.success('Logout Successfull')
+        navigate('/login'); 
+    };
+
     return (
         <>
+            <ToastContainer />
             <div className=" bg-[#F5F5F3] py-6">
                 <Container>
                     <Flex className="justify-between items-center">
@@ -101,7 +157,7 @@ const Header = () => {
                                                     :
                                                     <li onClick={() => navigate('/login')} className='py-4 px-5 border-b-[1px] text-primary active   hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white active:bg-primary  cursor-pointer'>Login</li>
                                             }
-                                            <li className='py-4 px-5 border-b-[1px] text-primary   hover:mx-2.5 ease-in duration-300 hover:font-bold active:text-white active:bg-primary  cursor-pointer' onClick={logout}>Log Out</li>
+                                            <li onClick={handleLogout} className='py-4 px-5 border-b-[1px] text-primary active   hover:mx-2.5 ease-in duration-300 hover:font-bold active:bg-primary  cursor-pointer'>Logout</li>
                                         </ul>
                                     )
                                 }
@@ -109,45 +165,11 @@ const Header = () => {
                             <Dropdown dropRef={cartRef} className="relative">
                                 <div className="cursor-pointer">
                                     <FaCartShopping />
+                                    <span className="absolute -top-3 -right-5 bg-slate-400 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                                        {cart?.length || 0}
+                                    </span>
                                 </div>
-                                {
-                                    cartrShow && (
-                                        <div className="w-[360px] z-50 absolute  top-[40px] right-0 bg-white shadow-md shadow-[#F5F5F3] text-primary">
-                                            <Flex className="justify-between p-5 items-center  border-b-[1px] border-[#F5F5F3]">
-                                                <div className="">
-                                                    <img src={Cart} alt="" className='w-[80px] h-[80px] object-cover' />
-                                                </div>
-                                                <div className="">
-                                                    <h3 className='font-bold text-primary text-base'>Black Smart Watch</h3>
-                                                    <p className='font-bold text-primary text-base'>$44.00</p>
-                                                </div>
-                                                <div className="">
-                                                    <button><ImCross /></button>
-                                                </div>
-                                            </Flex>
-                                            <Flex className="justify-between p-5 items-center  border-b-[1px] border-[#F5F5F3]">
-                                                <div className="">
-                                                    <img src={Cart} alt="" className='w-[80px] h-[80px] object-cover' />
-                                                </div>
-                                                <div className="">
-                                                    <h3 className='font-bold text-primary text-base'>Black Smart Watch</h3>
-                                                    <p className='font-bold text-primary text-base'>$44.00</p>
-                                                </div>
-                                                <div className="">
-                                                    <button><ImCross /></button>
-                                                </div>
-                                            </Flex>
-
-                                            <div className="p-5">
-                                                <h3 className='text-[#767676] text-base'>Subtotal: <span className='text-primary font-bold'>$44.00</span></h3>
-                                                <div className="flex gap-5">
-                                                    <button className='bg-transparent text-primary border ease-in duration-300 border-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md mt-3 w-full font-bold'>View Cart</button>
-                                                    <button className='bg-transparent text-primary border ease-in duration-300 border-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md mt-3 w-full font-bold'>Checkout</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                }
+                                {cartrShow && <CartHeader cart={cart} />}
                             </Dropdown>
                         </div>
                     </Flex>
