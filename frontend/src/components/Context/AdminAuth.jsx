@@ -10,9 +10,9 @@ export const AdminAuthProvider = ({ children }) => {
     });
     const [cart, setCart] = useState([]);
     const fetchCart = async () => {
-        const clind = JSON.parse(localStorage.getItem('adminInfo'));
-        if (clind) {
-            const id = clind?.admin?.customer?.id;
+        const cliend = JSON.parse(localStorage.getItem('adminInfo'));
+        if (cliend) {
+            const id = cliend?.admin?.customer?.id;
             try {
                 const res = await api.get(`/cart/product/${id}`);
                 setCart(res.data.customer); // কার্ট ডেটা সেভ

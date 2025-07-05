@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -50,8 +51,9 @@ class CartController extends Controller
             'customer' => $customer,
         ]);
     }
-    public function cartDelete($id){
-        
+    public function cartDelete($id)
+    {
+
         try {
             Cart::find($id)->delete();
             return response()->json([
@@ -62,6 +64,48 @@ class CartController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage()
+            ]);
+        }
+    }
+    public function updateQuantity(Request $request, $id)
+    {
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $cart = Cart::findOrFail($id);
+        $cart->quantity = $request->quantity;
+        $cart->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Quantity updated successfully',
+            'cart' => $cart
+        ]);
+    }
+
+    public function coupon(Request $request)
+    {
+        $request->validate([
+            'name' => 'required'
+        ]);
+        $coupon = Coupon::where('name', $request->name)->first();
+        if ($coupon->name === $request->name && $coupon->status == 1) {
+            if ($coupon->date > Carbon::now() && $coupon->limit > 0) {
+                $total = $request->subtotal * $coupon->discount / 100 ;
+                return response()->json([
+                    'coupon' => $coupon,
+                    'total' => $total,
+                    'messabe' => 'Coupon Add Successfull!'
+                ]);
+            } else {
+                return response()->json([
+                    'message' => "This coupon has expired",
+                ]);
+            }
+        } else {
+            return response()->json([
+                'message' => 'This coupon not exist',
             ]);
         }
     }

@@ -140,28 +140,10 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#forms" role="button" aria-expanded="false"
-                            aria-controls="forms">
+                        <a class="nav-link" href="{{route('coupon')}}">
                             <i class="link-icon" data-feather="inbox"></i>
-                            <span class="link-title">Forms</span>
-                            <i class="link-arrow" data-feather="chevron-down"></i>
+                            <span class="link-title">Coupon</span>
                         </a>
-                        <div class="collapse" id="forms">
-                            <ul class="nav sub-menu">
-                                <li class="nav-item">
-                                    <a href="pages/forms/basic-elements.html" class="nav-link">Basic Elements</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/forms/advanced-elements.html" class="nav-link">Advanced Elements</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/forms/editors.html" class="nav-link">Editors</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/forms/wizard.html" class="nav-link">Wizard</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#charts" role="button" aria-expanded="false"
@@ -649,7 +631,7 @@
     <!-- inject:js -->
     <script src="{{asset('backend')}}/assets/vendors/feather-icons/feather.min.js"></script>
     <script src="{{asset('backend')}}/assets/js/template.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <!-- endinject -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
@@ -657,6 +639,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- custom js for this page -->
     <script src="{{asset('backend')}}/assets/js/dashboard.js"></script>
     <script src="{{asset('backend')}}/assets/js/datepicker.js"></script>

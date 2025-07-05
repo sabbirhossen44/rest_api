@@ -53,7 +53,7 @@ const Header = () => {
     useEffect(() => {
         fetchCategory();
 
-        // 🖱️ Body click listener for dropdown close
+        //  Body click listener for dropdown close
         document.body.addEventListener('click', (e) => {
             setShow(ref.current?.contains(e.target));
             setUserShow(userRef.current?.contains(e.target));
@@ -162,7 +162,7 @@ const Header = () => {
                                     )
                                 }
                             </Dropdown>
-                            <Dropdown dropRef={cartRef} className="relative">
+                            <Dropdown dropRef={user? cartRef : null} className="relative">
                                 <div className="cursor-pointer">
                                     <FaCartShopping />
                                     <span className="absolute -top-3 -right-5 bg-slate-400 text-white text-xs font-bold px-2 py-0.5 rounded-full">

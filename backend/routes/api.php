@@ -47,3 +47,7 @@ Route::prefix('customer')->group(function () {
 Route::post('/cart/store', [CartController::class, 'cartStore']);
 Route::get('/cart/product/{id}', [CartController::class, 'cartProduct']);
 Route::get('/cart/delete/{id}', [CartController::class, 'cartDelete']);
+Route::put('/cart/update/{id}', [CartController::class, 'updateQuantity']);
+
+// coupon
+Route::post('/coupon', [CartController::class, 'coupon']);

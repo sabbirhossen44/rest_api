@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariationControler;
@@ -78,5 +79,13 @@ Route::post('/product/discount70', [ProductController::class, 'product_discount7
 Route::get('/inventory/{id}', [InventoryController::class, 'inventory'])->name('inventory');
 Route::post('/inventory/store/{id}', [InventoryController::class, 'inventory_store'])->name('inventory.store');
 Route::get('/inventory/delete/{id}', [InventoryController::class, 'inventory_delete'])->name('inventory.delete');
+
+// coupon
+Route::get('/coupon', [CouponController::class, 'index'])->name('coupon');
+Route::post('/coupon/store', [CouponController::class, 'coupon_store'])->name('coupon.store');
+Route::post('/coupon/getstatus', [CouponController::class, 'coupon_status']);
+Route::get('coupon/edit/{id}', [CouponController::class, 'coupon_edit'])->name('coupon.edit');
+Route::post('coupon/update/{id}', [CouponController::class, 'coupon_update'])->name('coupon.update');
+Route::get('coupon/delete/{id}', [CouponController::class, 'coupon_delete'])->name('coupon.delete');
 
 require __DIR__.'/auth.php';

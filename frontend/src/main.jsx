@@ -23,6 +23,7 @@ import AccountDetails from './Pages/Admin/Users.jsx'
 import Users from './Pages/Admin/Users.jsx'
 import Settings from './Pages/Admin/Settings.jsx'
 import ViewCart from './Pages/ViewCart.jsx'
+import Checkout from './Pages/Checkout.jsx'
 
 
 const router = createBrowserRouter(
@@ -44,6 +45,7 @@ const router = createBrowserRouter(
         <Route path="settings" element={<AdminReqireAuth><Settings /></AdminReqireAuth>} />
       </Route>
       <Route path='/viewcart' element={<AdminReqireAuth><ViewCart /></AdminReqireAuth>} />
+      <Route path='/checkout' element={<AdminReqireAuth><Checkout /></AdminReqireAuth>} />
 
     </Route>
   )
