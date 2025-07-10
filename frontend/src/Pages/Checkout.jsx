@@ -3,14 +3,17 @@ import Container from '../components/Layouts/Container'
 import { AdminAuthContext } from '../components/Context/AdminAuth';
 import Breadcrumbs from '../components/Layouts/Breadcrumbs'
 import { useForm } from 'react-hook-form'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-
+import { ToastContainer, toast } from 'react-toastify';
+import api from '../Http';
 
 
 const Checkout = () => {
-    const { cart, fetchCart } = useContext(AdminAuthContext);
+    const navigate = useNavigate();
+    const { cart } = useContext(AdminAuthContext);
     const [subtotal, setSubtotal] = useState();
+    const [charge, setCharge] = useState('');
     const {
         register,
         handleSubmit,
@@ -30,11 +33,32 @@ const Checkout = () => {
             setValue('name', customer.name || '');
             setValue('email', customer.email || '');
             setValue('number', customer.number || '');
+            setValue('zip', customer.zip || '');
+            setValue('address', customer.address || '');
+            setValue('coupon', coupon);
+            setValue('subtotal', subtotal);
+            setValue('total', (subtotal - coupon) + charge);
         }
-    }, [setValue])
-    const onSubmit = (data) => {
-        console.log(data)
-        // reset()
+    }, [setValue, coupon, subtotal, charge])
+    const onSubmit = async (data) => {
+        try {
+            if (data.payment == 2) {
+                navigate('/payment', {state: data});
+            } else {
+
+                const response = await api.post('/checkout', data);
+                if (response) {
+                    toast.success('Product Order Successful!');
+                    setTimeout(() => {
+                        navigate('/admin/orderlists');
+                    }, 2000);
+                } else {
+                    toast.error('Product order not Successful!')
+                }
+            }
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
     }
     useEffect(() => {
         if (cart && cart.length > 0) {
@@ -48,12 +72,13 @@ const Checkout = () => {
     }, [cart]);
     return (
         <>
+            <ToastContainer />
             <div className="py-20">
                 <Container>
                     <div className="mb-10">
                         <Breadcrumbs
                             title='Checkout'
-                            link='/checkout'
+                            link=''
                         />
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -98,7 +123,7 @@ const Checkout = () => {
                                 <div className="mb-3">
                                     <label htmlFor="" className='text-secondary mb-1 block'>Company Name</label>
                                     <input type="text"
-                                        {...register('companyNumber')}
+                                        {...register('companyName')}
                                         className='outline-none border w-full py-2 px-4 rounded-md'
                                     />
                                 </div>
@@ -155,8 +180,100 @@ const Checkout = () => {
                                         </div>
                                         <div className="py-2 border-b flex justify-between items-center">
                                             <div className="font-bold text-lg">Coupon:</div>
-                                            <div className="flex gap-1 items-center"><FaBangladeshiTakaSign />-{coupon? coupon: 0}</div>
+                                            <div className="flex gap-1 items-center"><FaBangladeshiTakaSign />-{coupon ? coupon : 0}</div>
                                         </div>
+                                        <div className="py-2 flex justify-between items-center">
+                                            <div className="font-bold text-lg">Shipping:</div>
+                                        </div>
+
+                                        <div className="py-2">
+                                            <div className="font-bold text-lg flex items-center">
+                                                <input
+                                                    type="radio"
+                                                    id="inside"
+                                                    value="70"
+                                                    {...register("charge", { required: "Shipping option is required" })}
+                                                    onClick={() => setCharge(70)}
+                                                    className="accent-pink-500"
+                                                />
+                                                <label htmlFor="inside" className="flex justify-between w-full ms-2 cursor-pointer">
+                                                    <span>Insite Dhaka</span>
+                                                    <span className="flex gap-1 items-center"><FaBangladeshiTakaSign />70</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {/* Outsite Dhaka */}
+                                        <div className="py-2">
+                                            <div className="font-bold text-lg flex items-center">
+                                                <input
+                                                    type="radio"
+                                                    id="outside"
+                                                    value="150"
+                                                    {...register("charge", { required: "Shipping option is required" })}
+                                                    onClick={() => setCharge(150)}
+                                                    className="accent-pink-500"
+                                                />
+                                                <label htmlFor="outside" className="flex justify-between w-full ms-2 cursor-pointer">
+                                                    <span>Outsite Dhaka</span>
+                                                    <span className="flex gap-1 items-center"><FaBangladeshiTakaSign />150</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {/* Validation Error */}
+                                        {errors.charge && (
+                                            <p className="text-red-500 text-sm mt-2">{errors.charge.message}</p>
+                                        )}
+
+
+                                        <div className="py-2 border-b flex justify-between items-center">
+                                            <div className="font-bold text-lg">Total:</div>
+                                            <div className="flex gap-1 items-center"><FaBangladeshiTakaSign />{(subtotal - coupon) + charge}</div>
+                                        </div>
+
+
+                                        <div className="py-2 flex justify-between items-center">
+                                            <div className="font-bold text-lg">Payment Method:</div>
+                                        </div>
+
+                                        <div className="py-2">
+                                            <div className="font-bold text-lg flex items-center">
+                                                <input
+                                                    type="radio"
+                                                    id="cash"
+                                                    value="1"
+                                                    {...register("payment", { required: "Payment Method option is required" })}
+                                                    className="accent-pink-500"
+                                                />
+                                                <label htmlFor="cash" className="flex justify-between w-full ms-2 cursor-pointer">
+                                                    <span>Cash on Delivery</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className="py-2">
+                                            <div className="font-bold text-lg flex items-center">
+                                                <input
+                                                    type="radio"
+                                                    id="bank"
+                                                    value="2"
+                                                    {...register("payment", { required: "Payment Method option is required" })}
+                                                    onClick={() => setCharge(150)}
+                                                    className="accent-pink-500"
+                                                />
+                                                <label htmlFor="bank" className="flex justify-between w-full ms-2 cursor-pointer">
+                                                    <span>Pay With STRIPE</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {/* Validation Error */}
+                                        {errors.payment && (
+                                            <p className="text-red-500 text-sm mt-2">{errors.payment.message}</p>
+                                        )}
+
+
                                     </div>
                                 </div>
                                 <div className="mt-4">

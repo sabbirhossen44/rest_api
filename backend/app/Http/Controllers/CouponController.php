@@ -69,4 +69,5 @@ class CouponController extends Controller
         Coupon::find($id)->delete();
         return back()->with('coupon_delete', 'Coupon Delete Successfull!');
     }
+   
 }

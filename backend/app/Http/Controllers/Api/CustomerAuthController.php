@@ -27,7 +27,7 @@ class CustomerAuthController extends Controller
         $token = $customer->createToken('customer-token')->plainTextToken;
 
         return response()->json([
-            'customer' => $customer, 
+            'customer' => $customer,
             'token' => $token,
             'message' => 'Registartion Successfull!'
         ], 201);
@@ -50,7 +50,17 @@ class CustomerAuthController extends Controller
 
             return response()->json([
                 'status' => true,
-                'customer' => $customer,
+                // 'customer' => $customer,
+                'customer' => [
+                    'id' => $customer->id,
+                    'name' => $customer->name,
+                    'email' => $customer->email,
+                    'number' => $customer->number,
+                    'address' => $customer->address,
+                    'zip' => $customer->zip,
+                    'photo' => $customer->photo,
+                    'photo_url' => $customer->photo ? asset('admin/customer/' . $customer->photo) : '',
+                ],
                 'token' => $token,
                 'message' => 'Login Successfully!'
             ]);
@@ -68,22 +78,51 @@ class CustomerAuthController extends Controller
 
         return response()->json(['message' => 'Logged out']);
     }
-    public function update(Request $request){
-       $user =  Customer::find($request->id);
+    public function update(Request $request)
+    {
+        $user =  Customer::find($request->id);
+        $photo_url = '';
         try {
-            if ($user ) {
-                $user->update([
-                    'name' => $request->name,
-                    'number' => $request->number,
-                    'zip' => $request->zip,
-                    'address' => $request->address,
-                    'updated_at' => Carbon::now(),
-                ]);
-                return response()->json([
-                    'statu' => true,
-                    'message' => 'User Info Update Successfull!'
-                ]);
-            }else {
+            if ($user) {
+                if ($request->hasFile('photo')) {
+                    $photo_path = public_path('admin/customer/' . $user->photo);
+                    if ($user->photo && file_exists($photo_path)) {
+                        unlink($photo_path);
+                    }
+                    $photo = $request->file('photo');
+                    $photo_name = "Customer_" . time() . uniqid() . '.' . $photo->getClientOriginalExtension();
+                    $photo_url = $photo_name;
+                    $photo->move(public_path('admin/customer/'), $photo_name);
+
+                    $user->update([
+                        'name' => $request->name,
+                        'number' => $request->number,
+                        'zip' => $request->zip,
+                        'address' => $request->address,
+                        'photo' => $photo_name,
+                        'updated_at' => Carbon::now(),
+                    ]);
+                    return response()->json([
+                        'status' => true,
+                        'photo_path' => $photo_url && $user->photo
+                            ? "http://127.0.0.1:8000/admin/customer/{$photo_url}"
+                            : "http://127.0.0.1:8000/admin/customer/{$user->photo}",
+                        'message' => 'User Info Update Successfull!'
+                    ]);
+                } else {
+                    $user->update([
+                        'name' => $request->name,
+                        'number' => $request->number,
+                        'zip' => $request->zip,
+                        'address' => $request->address,
+                        'updated_at' => Carbon::now(),
+                    ]);
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'User Info Update Successfull!'
+                    ]);
+                }
+            } else {
                 return response()->json([
                     'status' => false,
                     'message' => 'Something is wrong'

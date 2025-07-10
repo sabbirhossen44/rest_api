@@ -31,8 +31,8 @@ const ViewCart = () => {
       const response = await api.post('/coupon', data);
       if (response) {
         setCoupon(response.data.total);
-        toast.success(response.data.message)
         fetchCart();
+        toast.success(response.data.message)
       }
     } catch (error) {
       toast.error(error.response.data.message);

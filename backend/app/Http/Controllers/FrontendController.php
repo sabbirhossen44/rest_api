@@ -7,7 +7,9 @@ use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Customer;
 use App\Models\Inventory;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductGallery;
 use Illuminate\Http\Request;
@@ -215,6 +217,158 @@ class FrontendController extends Controller
                 'status' => false,
                 'message' => "Product not found",
                 'products' => $th->getMessage(),
+            ]);
+        }
+    }
+    public function orderproduct_info($id)
+    {
+        $products = OrderProduct::where('product_id', $id)
+            ->whereNotNull('review')
+            ->where('review', '!=', '')
+            ->orderByDesc('star')
+            ->take(12)
+            ->get();
+
+        $total_review = $products->count();
+
+        $total_star = OrderProduct::where('product_id', $id)
+            ->whereNotNull('review')
+            ->where('review', '!=', '')
+            ->sum('star');
+
+        $users = [];
+
+        foreach ($products as $product) {
+            $customer = Customer::find($product->customer_id);
+
+            if ($customer) {
+                $users[] = [
+                    'id' => $customer->id,
+                    'name' => $customer->name,
+                    'photo_url' => $customer->photo ? asset('admin/customer/' . $customer->photo) : '',
+                ];
+            }
+        }
+
+        return response()->json([
+            'status' => true,
+            'products' => $products,
+            'total_review' => $total_review,
+            'total_star' => (int)$total_star,
+            'users' => $users
+            // $formattedDate = Carbon::parse($orderDate)->format('F d, Y \a\t g:i a');
+        ]);
+    }
+
+    public function product_review_store(Request $request)
+    {
+        $request->validate([
+            'comment' => 'required',
+            'product_id' => 'required',
+            'star' => 'required|integer|min:1|max:5',
+            'userid' => 'required',
+        ]);
+
+        try {
+            $product = OrderProduct::where('customer_id', $request->userid)
+                ->where('product_id', $request->product_id)
+                ->first();
+
+            if (!$product) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'You must purchase this product before reviewing.',
+                ]);
+            }
+
+            if (!empty($product->review)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'You have already reviewed this product.',
+                ]);
+            }
+
+            // Save review and star
+            $product->review = $request->comment;
+            $product->star = $request->star;
+            $product->save();
+            return response()->json([
+                'status' => true,
+                'message' => 'Your review has been submitted successfully!',
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Something went wrong.',
+                'error' => $th->getMessage()
+            ]);
+        }
+    }
+    public function newProduct()
+    {
+        try {
+            $products = Product::where('status', 1)->latest()
+                ->take('10')
+                ->get()
+                ->map(function ($e) {
+                    $e->photo = asset('admin/product/preview/' . $e->preview);
+                    return $e;
+                });
+            return response()->json([
+                'status' => true,
+                'message' => "Products fetched",
+                'products' => $products,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ]);
+        }
+    }
+    public function bestSale()
+    {
+        try {
+            $products = Product::where('status', 1)
+                ->orderByDesc('sold_count')
+                ->take('10')
+                ->get()
+                ->map(function ($e) {
+                    $e->photo = asset('admin/product/preview/' . $e->preview);
+                    return $e;
+                });
+            return response()->json([
+                'status' => true,
+                'message' => "Products fetched",
+                'products' => $products,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ]);
+        }
+    }
+    public function speciaOffers()
+    {
+        try {
+            $products = Product::where('status', 1)
+                ->orderByDesc('discount')
+                ->take('10')
+                ->get()
+                ->map(function ($e) {
+                    $e->photo = asset('admin/product/preview/' . $e->preview);
+                    return $e;
+                });
+            return response()->json([
+                'status' => true,
+                'message' => "Products fetched",
+                'products' => $products,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
             ]);
         }
     }

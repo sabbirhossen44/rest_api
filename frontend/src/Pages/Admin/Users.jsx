@@ -28,7 +28,19 @@ const Users = () => {
   }, [setValue]);
   const onSubmit = async (data) => {
     try {
-      const response = await api.post('/customer/update', data);
+      const formData = new FormData();
+      Object.keys(data).forEach((key) => {
+        if (key == 'photo' && data.photo?.[0]) {
+          formData.append('photo', data.photo[0]);
+        } else {
+          formData.append(key, data[key]);
+        }
+      })
+      const response = await api.post('/customer/update', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       const updateUser = {
         ...user,
         ...data,
@@ -38,6 +50,13 @@ const Users = () => {
       if (storeData && storeData.admin && storeData.admin.customer) {
         storeData.admin.customer = updateUser;
         localStorage.setItem('adminInfo', JSON.stringify(storeData));
+      }
+      if (response.data.photo_path) {
+        if (storeData && storeData.admin && storeData.admin.customer) {
+          storeData.admin.customer = updateUser;
+          storeData.admin.customer.photo_url = response.data.photo_path;
+          localStorage.setItem('adminInfo', JSON.stringify(storeData));
+        }
       }
       toast.success(response.data.message);
     } catch (error) {
@@ -104,6 +123,16 @@ const Users = () => {
                 <input
                   type="number"
                   {...register('zip')}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+              <div className="mb-3">
+                <label className="block text-gray-700 font-medium mb-1" htmlFor="username1">
+                  User Photo
+                </label>
+                <input
+                  type="file"
+                  {...register('photo')}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>

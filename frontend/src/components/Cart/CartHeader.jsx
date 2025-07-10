@@ -32,13 +32,13 @@ const CartHeader = ({ cart }) => {
                 {
                     cart &&
                     cart.map((data, index) => (
-                        <Flex key={index} className="justify-between p-5 items-center  border-b-[1px] border-[#F5F5F3]">
+                        <Flex key={index} className="justify-between p-5 items-center gap-3  border-b-[1px] border-[#F5F5F3]">
                             <div className="">
                                 <img src={data.photo} alt="" className='w-[80px] h-[80px] object-cover' />
                             </div>
 
                             <div className="">
-                                <h3 className='font-bold text-primary text-base'>Black Smart Watch</h3>
+                                <h3 className='font-bold text-primary text-base text-wrap'>{data.cart_to_product.product_name}</h3>
                                 <p className='font-bold text-primary text-base flex items-center'>
                                     <FaBangladeshiTakaSign />{data.cart_to_product.after_discount} X {data.quantity}</p>
                                 <p className='font-bold text-primary text-base flex items-center'>
@@ -62,7 +62,7 @@ const CartHeader = ({ cart }) => {
                     }
                     <div className="flex gap-5">
                         <button onClick={() => navigate('/viewcart')} className='bg-transparent text-primary border ease-in duration-300 border-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md mt-3 w-full font-bold'>View Cart</button>
-                        <button className='bg-transparent text-primary border ease-in duration-300 border-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md mt-3 w-full font-bold'>Checkout</button>
+                        <button onClick={() => navigate('/viewcart')} className='bg-transparent text-primary border ease-in duration-300 border-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md mt-3 w-full font-bold'>Checkout</button>
                     </div>
                 </div>
             </div>

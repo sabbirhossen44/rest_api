@@ -12,7 +12,7 @@ const Product = ({badge,discoutn, product_img, product_name, product_price, prod
     return (
         <>
             <div className={`${className}`}>
-                <div className="w-[370px] h-[370px] object-cover relative group overflow-y-hidden ease-in duration-400">
+                <div className="w-[370px] h-[370px] object-cover relative group overflow-y-hidden ease-in duration-400 bg-[#E8E8E8]">
                     <img src={product_img} className='w-full h-full' alt="" />
                     {
                         badge && <Badge discount={discoutn}/>

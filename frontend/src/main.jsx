@@ -19,11 +19,11 @@ import Dashboard from './Pages/Admin/Dashboard.jsx';
 import { AdminReqireAuth } from './components/Context/AdminRequireAuth.jsx'
 import { AdminAuthProvider } from './components/Context/AdminAuth.jsx'
 import DashboardLayout from './components/Layouts/DashboardLayout.jsx'
-import AccountDetails from './Pages/Admin/Users.jsx'
 import Users from './Pages/Admin/Users.jsx'
-import Settings from './Pages/Admin/Settings.jsx'
 import ViewCart from './Pages/ViewCart.jsx'
 import Checkout from './Pages/Checkout.jsx'
+import OrderList from './Pages/Admin/OrderList.jsx'
+import PaymentPage from './Pages/PaymentPage.jsx'
 
 
 const router = createBrowserRouter(
@@ -42,18 +42,19 @@ const router = createBrowserRouter(
       <Route path="/admin" element={<AdminReqireAuth><DashboardLayout /></AdminReqireAuth>}>
         <Route path="dashboard" element={<AdminReqireAuth><Dashboard /></AdminReqireAuth>} />
         <Route path="users" element={<AdminReqireAuth><Users /></AdminReqireAuth>} />
-        <Route path="settings" element={<AdminReqireAuth><Settings /></AdminReqireAuth>} />
+        <Route path="orderlists" element={<AdminReqireAuth><OrderList /></AdminReqireAuth>} />
       </Route>
       <Route path='/viewcart' element={<AdminReqireAuth><ViewCart /></AdminReqireAuth>} />
       <Route path='/checkout' element={<AdminReqireAuth><Checkout /></AdminReqireAuth>} />
+      <Route path='/payment' element={<AdminReqireAuth><PaymentPage /></AdminReqireAuth>} />
 
     </Route>
   )
 );
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <AdminAuthProvider>
       <RouterProvider router={router} />
     </AdminAuthProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 )

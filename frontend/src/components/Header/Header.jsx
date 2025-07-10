@@ -17,8 +17,6 @@ import CartHeader from '../Cart/CartHeader';
 
 const Header = () => {
     const { user, logout, cart, fetchCart } = useContext(AdminAuthContext);
-    // const { logout , user, setUser } = useContext(AdminAuthContext);
-    // const [user, setUser] = useState(true);
     const navigate = useNavigate();
     const ref = useRef();
     const userRef = useRef();
@@ -27,33 +25,13 @@ const Header = () => {
     const [userShow, setUserShow] = useState(false);
     const [cartrShow, setCartShow] = useState(false);
     const [category, setCategory] = useState([]);
-    // useEffect(() => {
-    //     document.body.addEventListener('click', (e) => {
-    //         if (ref.current && ref.current.contains(e.target)) {
-    //             setShow(true);
-    //         } else {
-    //             setShow(false);
-    //         }
-    //         if (userRef.current.contains(e.target)) {
-    //             setUserShow(true);
-    //         } else {
-    //             setUserShow(false);
-    //         }
-    //         if (cartRef.current.contains(e.target)) {
-    //             setCartShow(true);
-    //         } else {
-    //             setCartShow(false);
-    //         }
-    //     })
-    //     fetchCategory();
-    // })
+    
     useEffect(() => {
         fetchCart()
     })
     useEffect(() => {
         fetchCategory();
 
-        //  Body click listener for dropdown close
         document.body.addEventListener('click', (e) => {
             setShow(ref.current?.contains(e.target));
             setUserShow(userRef.current?.contains(e.target));
@@ -73,46 +51,7 @@ const Header = () => {
         queryParams.set('search', value);
         navigate(`/shop?${queryParams.toString()}`);
     };
-    // useEffect(() => {
-    //     const data = localStorage.getItem('adminInfo');
-    //     if (data) {
-    //         setUser(true);
-    //     }
-    // });
-    // const fetchCategory = async () => {
-    //     const response = await api.get('/categorys');
-    //     if (response.data.status == true) {
-    //         setCategory(response.data.categories);
-    //     } else {
-    //         console.log('Something is wrong!')
-    //     }
-    // }
-    // const handleClick = (value) => {
-    //     const queryParams = new URLSearchParams(location.search);
-    //     queryParams.set('search', value);
-    //     navigate(`/shop?${queryParams.toString()}`);
-    // }
-
-    // useEffect(() => {
-
-    //     const fetchCart = async () => {
-    //         const clind = JSON.parse(localStorage.getItem('adminInfo'));
-    //         if (clind) {
-    //             const id = clind?.admin?.customer?.id;
-    //             try {
-    //                 const res = await api.get(`/cart/product/${id}`);
-    //                 setCart(res.data.customer);
-    //             } catch (error) {
-    //                 toast.error(error.response?.data?.message || 'Something went wrong');
-    //                 setCart([]);
-    //             }
-    //         } else {
-    //             setCart([]);
-    //         }
-    //     };
-
-    //     fetchCart();
-    // }, [user]);
+    
 
     const handleLogout = () => {
         logout();  

@@ -3,7 +3,9 @@
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariationControler;
 use App\Http\Controllers\ProfileController;
@@ -87,5 +89,20 @@ Route::post('/coupon/getstatus', [CouponController::class, 'coupon_status']);
 Route::get('coupon/edit/{id}', [CouponController::class, 'coupon_edit'])->name('coupon.edit');
 Route::post('coupon/update/{id}', [CouponController::class, 'coupon_update'])->name('coupon.update');
 Route::get('coupon/delete/{id}', [CouponController::class, 'coupon_delete'])->name('coupon.delete');
+
+// order 
+Route::get('/order/list', [OrderController::class, 'order_list'])->name('order.list');
+Route::post('/order/status/{id}', [OrderController::class, 'order_status'])->name('order.status');
+
+
+// customer
+Route::get('/customer/list', [CustomerController::class, 'customer_list'])->name('customer.list');
+
+
+// Route::get('/inventory', [CouponController::class, 'inventory'])->name('inventory');
+
+
+// ads
+
 
 require __DIR__.'/auth.php';

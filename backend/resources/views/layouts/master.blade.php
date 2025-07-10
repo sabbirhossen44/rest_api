@@ -70,6 +70,7 @@
                                 <li class="nav-item">
                                     <a href="{{route('user.list')}}" class="nav-link">New User</a>
                                 </li>
+                                
 
                             </ul>
                         </div>
@@ -133,9 +134,7 @@
                                 <li class="nav-item">
                                     <a href="{{route('product.list')}}" class="nav-link">Product List</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="pages/advanced-ui/sweet-alert.html" class="nav-link">Sweet Alert</a>
-                                </li>
+                                
                             </ul>
                         </div>
                     </li>
@@ -149,29 +148,15 @@
                         <a class="nav-link" data-toggle="collapse" href="#charts" role="button" aria-expanded="false"
                             aria-controls="charts">
                             <i class="link-icon" data-feather="pie-chart"></i>
-                            <span class="link-title">Charts</span>
+                            <span class="link-title">Orders</span>
                             <i class="link-arrow" data-feather="chevron-down"></i>
                         </a>
                         <div class="collapse" id="charts">
                             <ul class="nav sub-menu">
                                 <li class="nav-item">
-                                    <a href="pages/charts/apex.html" class="nav-link">Apex</a>
+                                    <a href="{{route('order.list')}}" class="nav-link">Order List</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="pages/charts/chartjs.html" class="nav-link">ChartJs</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/charts/flot.html" class="nav-link">Flot</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/charts/morrisjs.html" class="nav-link">Morris</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/charts/peity.html" class="nav-link">Peity</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/charts/sparkline.html" class="nav-link">Sparkline</a>
-                                </li>
+                                
                             </ul>
                         </div>
                     </li>
@@ -179,16 +164,13 @@
                         <a class="nav-link" data-toggle="collapse" href="#tables" role="button" aria-expanded="false"
                             aria-controls="tables">
                             <i class="link-icon" data-feather="layout"></i>
-                            <span class="link-title">Table</span>
+                            <span class="link-title">Customers</span>
                             <i class="link-arrow" data-feather="chevron-down"></i>
                         </a>
                         <div class="collapse" id="tables">
                             <ul class="nav sub-menu">
                                 <li class="nav-item">
-                                    <a href="pages/tables/basic-table.html" class="nav-link">Basic Tables</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/tables/data-table.html" class="nav-link">Data Table</a>
+                                    <a href="{{route('customer.list')}}" class="nav-link">Customer List</a>
                                 </li>
                             </ul>
                         </div>
@@ -197,7 +179,7 @@
                         <a class="nav-link" data-toggle="collapse" href="#icons" role="button" aria-expanded="false"
                             aria-controls="icons">
                             <i class="link-icon" data-feather="smile"></i>
-                            <span class="link-title">Icons</span>
+                            <span class="link-title">Ads</span>
                             <i class="link-arrow" data-feather="chevron-down"></i>
                         </a>
                         <div class="collapse" id="icons">

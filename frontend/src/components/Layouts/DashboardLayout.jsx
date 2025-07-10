@@ -4,8 +4,7 @@ import AdminSidebar from './AdminSidebar';
 import Container from '../Layouts/Container'
 import Breadcrumbs from './Breadcrumbs';
 
-// DashboardLayout is the main layout for admin area
-// It contains a persistent sidebar and a dynamic content area
+
 const DashboardLayout = () => {
     return (
         <>
@@ -17,7 +16,7 @@ const DashboardLayout = () => {
                             link = '/admin/dashboard'
                         />
                     </div>
-                    <div className="flex">
+                    <div className="flex rounded-lg overflow-hidden">
                         <AdminSidebar />
                         <div className="flex-1 p-6 bg-gray-100">
                             <Outlet />
