@@ -198,17 +198,17 @@ const ProductInfo = ({ data }) => {
                     button ?
 
                       AllquentityColor > 0 ?
-                        <button type='submit' className="bg-green-500 hover:bg-green-600 text-white py-2.5 text-xl px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                        <button type='submit' className="bg-green-500 hover:bg-green-600 text-white py-2.5 text-xl md:px-4 px-3 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
                           Add To Cart
                         </button>
                         :
-                        <button className="bg-green-500 hover:bg-green-600 text-white py-2.5 text-xl px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                        <button className="bg-green-500 hover:bg-green-600 text-white py-2.5 text-xl md:px-4 px-3 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
                           {stockMsg.message}
                         </button>
 
                       :
 
-                      <button className="bg-green-500 hover:bg-green-600 text-white py-2.5 text-xl px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                      <button className="bg-green-500 hover:bg-green-600 text-white py-2.5 text-xl md:px-4 px-3 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
                         Add To Cart
                       </button>
 

@@ -7,12 +7,15 @@ use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\ContactMessage;
 use App\Models\Customer;
 use App\Models\Inventory;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductGallery;
+use App\Models\Subscribe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class FrontendController extends Controller
 {
@@ -364,6 +367,57 @@ class FrontendController extends Controller
                 'status' => true,
                 'message' => "Products fetched",
                 'products' => $products,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ]);
+        }
+    }
+    
+    public function contactmessage(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+            'service' => 'required',
+            'message' => 'required',
+        ]);
+
+        try {
+            ContactMessage::insert([
+                'name' => $request->name,
+                'email' => $request->email,
+                'address' => $request->address,
+                'service' => $request->service,
+                'message' => $request->message,
+                'created_at'=> Carbon::now(),
+            ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'Message Send Successful!'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Something is wrong'
+            ]);
+        }
+
+    }
+    public function subscribe(Request $request){
+        $request->validate([
+            'email' => 'required|email|unique:subscribes,email'
+        ]);
+        try {
+            Subscribe::insert([
+                'email' => $request->email,
+                'created_at' => Carbon::now(),
+            ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'Subscribe Successful!',
             ]);
         } catch (\Throwable $th) {
             return response()->json([

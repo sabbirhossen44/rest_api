@@ -8,7 +8,7 @@ const Reviews = ({ productData }) => {
     const [product, setProduct] = useState();
     const [customers, setCustomers] = useState();
     const [user, setUser] = useState();
-    useEffect(()=>{
+    useEffect(() => {
         const data = JSON.parse(localStorage.getItem('adminInfo'));
         if (data) {
             setUser(data.admin.customer.id);
@@ -19,7 +19,7 @@ const Reviews = ({ productData }) => {
             const response = await api.get(`/orderproduct/details/${productData.product.id}`);
             if (response) {
                 setProduct(response.data);
-                setCustomers(response.data.users); 
+                setCustomers(response.data.users);
             }
         }
         faceProduct()
@@ -33,41 +33,73 @@ const Reviews = ({ productData }) => {
             {
                 product ?
                     <div className="p-2 bg-slate-50 rounded-lg">
-                        <h2 className='text-3xl py-2 px-5 text-secondary'>3 reviews for Stylish Pink Coat</h2>
+                        <h2 className='md:text-3xl text-lg py-2 px-5 text-secondary'>3 reviews for Stylish Pink Coat</h2>
                         {
                             product.products.map((data, index) => {
                                 const customer = customers?.find(c => c.id === data.customer_id);
                                 return (
-                                    <div className="p-4 rounded my-2 mx-8 flex gap-10" key={index}>
-                                        <div className="">
-                                            {
-                                                customer?.photo_url ?
-                                                    <img src={customer.photo_url} alt={customer.name} className="w-16 h-1w-16 mt-2 rounded-full" />
-                                                    :
-                                                    <div className="w-16 h-1w-16 mt-2 rounded-full bg-gray-300 flex items-center justify-center">
-                                                        <span className="text-gray-700 font-bold">{customer?.name?.[0]}</span>
+                                    <>
+                                        <div className="hidden md:block">
+                                            <div className="p-4 rounded my-2 md:mx-8 flex gap-10" key={index}>
+                                                <div className="flex-shrink-0">
+                                                    {
+                                                        customer?.photo_url ?
+                                                            <img src={customer.photo_url} alt={customer.name} className="w-16 h-16 mt-2 rounded-full" />
+                                                            :
+                                                            <div className="w-16 h-16 mt-2 rounded-full bg-gray-300 flex items-center justify-center">
+                                                                <span className="text-gray-700 font-bold">{customer?.name?.[0]}</span>
+                                                            </div>
+                                                    }
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <span className="text-2xl text-primary">{customer?.name}</span>
+                                                    <p className='text-sm py-1 text-secondary'>{formatDate(data.created_at)}</p>
+                                                    <div className="flex gap-2 items-center">
+                                                        <StarRating
+                                                            rating={data.star}
+                                                        />
+                                                        <p className=' text-secondary'>{data.star}</p>
                                                     </div>
-                                            }
-                                        </div>
-                                        <div className="">
-                                            <span className="text-2xl text-primary">{customer?.name}</span>
-                                            <p className='text-sm py-1 text-secondary'>{formatDate(data.created_at)}</p>
-                                            <div className="flex gap-2 items-center">
-                                                <StarRating
-                                                    rating={data.star}
-                                                />
-                                                <p className=' text-secondary'>{data.star}</p>
+                                                    <p className=" text-secondary">{data.review}</p>
+                                                </div>
                                             </div>
-                                            <p className=" text-secondary">{data.review}</p>
                                         </div>
-                                    </div>
+                                        
+                                        <div className="block md:hidden">
+                                            <div className="p-4 rounded my-2 md:mx-8 flex flex-col gap-4" key={index}>
+                                                <div className="flex items-center gap-5">
+                                                    {
+                                                        customer?.photo_url ?
+                                                            <img src={customer.photo_url} alt={customer.name} className="w-16 h-16 mt-2 rounded-full" />
+                                                            :
+                                                            <div className="w-16 h-16 mt-2 rounded-full bg-gray-300 flex items-center justify-center">
+                                                                <span className="text-gray-700 font-bold">{customer?.name?.[0]}</span>
+                                                            </div>
+                                                    }
+                                                    <div className="">
+                                                        <span className="text-2xl text-primary">{customer?.name}</span>
+                                                        <p className='text-sm py-1 text-secondary'>{formatDate(data.created_at)}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <div className="flex gap-2 items-center">
+                                                        <StarRating
+                                                            rating={data.star}
+                                                        />
+                                                        <p className=' text-secondary'>{data.star}</p>
+                                                    </div>
+                                                    <p className=" text-secondary">{data.review}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
                                 )
                             })
                         }
                         <div className="">
                             <RatingForm
-                                userid = {user}
-                                product_id = {productData.product.id}
+                                userid={user}
+                                product_id={productData.product.id}
                             />
                         </div>
                     </div>

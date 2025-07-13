@@ -26,12 +26,12 @@ const Shop = () => {
                         title='Product'
                         link = '/shop'
                     />
-                    <Flex className="mt-32 gap-10">
-                        <div className="w-1/4 shadow-xl p-3">
+                    <Flex className="mt-32 gap-10 md:flex-row flex-col">
+                        <div className="md:w-1/4 w-4/4 shadow-xl p-3">
                             <LeftSidebar />
                         </div>
-                        <div className="w-3/4">
-                            <div className="flex items-center justify-end gap-x-10">
+                        <div className="md:w-3/4 w-4/4">
+                            <div className="flex items-center justify-end gap-x-10 gap-y-5 md:gap-y-0 md:flex-row flex-col">
                                 <div className="flex items-center gap-3">
                                     <div className="text-base font-medium text-secondary">Sort by:</div>
                                     <div className="w-[240px]">

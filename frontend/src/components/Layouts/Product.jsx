@@ -12,7 +12,7 @@ const Product = ({badge,discoutn, product_img, product_name, product_price, prod
     return (
         <>
             <div className={`${className}`}>
-                <div className="w-[370px] h-[370px] object-cover relative group overflow-y-hidden ease-in duration-400 bg-[#E8E8E8]">
+                <div className="xl:w-[370px] w-[96%] h-[370px] object-cover relative group overflow-y-hidden ease-in duration-400 bg-[#E8E8E8]">
                     <img src={product_img} className='w-full h-full' alt="" />
                     {
                         badge && <Badge discount={discoutn}/>
@@ -31,7 +31,7 @@ const Product = ({badge,discoutn, product_img, product_name, product_price, prod
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-between w-[360px] items-center mt-4">
+                <div className="flex justify-between xl:w-[360px] w-[96%] items-center mt-4">
                     <h3 onClick={() => navigate(`/product_details/${slug}`)} className='cursor-pointer hover:text-teal-400 font-bold ease-in duration-300' >{product_name}</h3>
                     <span className='flex items-center gap-1'><span><FaBangladeshiTakaSign /></span>{product_price}</span>
                 </div>

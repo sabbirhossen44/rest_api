@@ -71,4 +71,8 @@ Route::get('/generatepdf/{id}', [PDFController::class, 'generatePDF']);
 Route::post('/create-payment-intent', [StripePaymentController::class, 'createPaymentIntent']);
 
 
-// ads
+// contact page
+Route::post('/contactmessage', [FrontendController::class, 'contactmessage']);
+
+// Subscribe
+Route::post('/subscribe', [FrontendController::class, 'subscribe']);

@@ -97,6 +97,10 @@ Route::post('/order/status/{id}', [OrderController::class, 'order_status'])->nam
 
 // customer
 Route::get('/customer/list', [CustomerController::class, 'customer_list'])->name('customer.list');
+Route::get('/customer/message', [CustomerController::class, 'customer_message'])->name('customer.message');
+Route::get('/customer/message/delete/{id}', [CustomerController::class, 'customer_message_delete'])->name('customer.message.delete');
+Route::get('/subscribe/list', [CustomerController::class, 'subscribe_list'])->name('subscribe.list');
+Route::get('/subscribe/delete/{id}', [CustomerController::class, 'subscribe_delete'])->name('subscribe.delete');
 
 
 // Route::get('/inventory', [CouponController::class, 'inventory'])->name('inventory');

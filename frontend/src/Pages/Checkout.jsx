@@ -83,8 +83,8 @@ const Checkout = () => {
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <input type="hidden" {...register('id')} />
-                        <div className="flex gap-20">
-                            <div className="w-2/4">
+                        <div className="flex gap-20 md:flex-row flex-col">
+                            <div className="md:w-2/4 w-4/4">
                                 <div className="mb-3">
                                     <label htmlFor="" className='text-secondary mb-1 block'>Full Name*</label>
                                     <input type="text"
@@ -158,7 +158,7 @@ const Checkout = () => {
                                     {errors.zip && <p className='text-red-500 text-sm'>{errors.zip.message}</p>}
                                 </div>
                             </div>
-                            <div className="w-2/4">
+                            <div className="w-4/4 md:w-2/4">
                                 <div className="w-full">
                                     {
                                         cart && cart.map((data, index) => (

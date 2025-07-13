@@ -26,9 +26,8 @@ const CartHeader = ({ cart }) => {
     }, 0);
     return (
         <>
-            
             <ToastContainer />
-            <div className="w-[360px] z-50 absolute  top-[40px] right-0 bg-white shadow-md shadow-[#F5F5F3] text-primary">
+            <div className="md:w-[360px] w-[320px] z-50 absolute  top-[40px] right-0 bg-white shadow-md shadow-[#F5F5F3] text-primary">
                 {
                     cart &&
                     cart.map((data, index) => (
@@ -61,8 +60,8 @@ const CartHeader = ({ cart }) => {
                         )
                     }
                     <div className="flex gap-5">
-                        <button onClick={() => navigate('/viewcart')} className='bg-transparent text-primary border ease-in duration-300 border-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md mt-3 w-full font-bold'>View Cart</button>
-                        <button onClick={() => navigate('/viewcart')} className='bg-transparent text-primary border ease-in duration-300 border-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md mt-3 w-full font-bold'>Checkout</button>
+                        <button onClick={() => {navigate('/viewcart')}} className='bg-transparent text-primary border ease-in duration-300 border-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md mt-3 w-full font-bold'>View Cart</button>
+                        <button onClick={() => {navigate('/viewcart')}} className='bg-transparent text-primary border ease-in duration-300 border-primary hover:bg-primary hover:text-white px-5 py-2.5 rounded-md mt-3 w-full font-bold'>Checkout</button>
                     </div>
                 </div>
             </div>

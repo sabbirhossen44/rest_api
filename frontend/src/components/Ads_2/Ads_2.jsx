@@ -1,14 +1,13 @@
 import React from 'react'
 import Container from '../Layouts/Container'
-import ads2 from '../../assets/ads2.png'
-import { useNavigate } from 'react-router-dom'
+import ads_2 from '../../assets/Ads_2.png'
+import { Link } from 'react-router-dom'
 
 const Ads_2 = () => {
-  const navigate = useNavigate()
   return (
     <>
       <Container>
-        <div className="w-full bg-[#F3F3F3] flex items-center gap-4">
+        {/* <div className="w-full bg-[#F3F3F3] flex items-center gap-4">
           <div className="w-2/6 text-center inline-block">
             <img src={ads2} alt="" />
           </div>
@@ -19,6 +18,11 @@ const Ads_2 = () => {
               <button className=' w-44 py-2 text-lg bg-black text-white' onClick={()=> navigate('/shop')}>Shop Now</button>
             </div>
           </div>
+        </div> */}
+        <div className="w-full">
+          <Link to='/shop'>
+            <img src={ads_2} alt="" className='w-full h-auto object-cover' />
+          </Link>
         </div>
       </Container>
     </>

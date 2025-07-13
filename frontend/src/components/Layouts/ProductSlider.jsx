@@ -36,6 +36,7 @@ const ProductSlider = ({ title, product }) => {
                     slidesToShow: 2,
                     slidesToScroll: 2,
                     initialSlide: 2
+
                 }
             },
             {
@@ -49,24 +50,26 @@ const ProductSlider = ({ title, product }) => {
     };
     return (
         <>
-            <div className="pt-28">
+            <div className="md:pt-28 pt-10">
                 <Container>
                     <Heading title={title} />
                     <div className="py-10">
                         <Slider {...settings}>
                             {
                                 product ? product.map((data, index) => (
-                                    <Product
-                                        key={index}
-                                        badge={data.discount ? true : false}
-                                        discoutn={data.discount}
-                                        product_img={data.photo}
-                                        product_name={data.product_name}
-                                        product_price={data.after_discount}
-                                        product_wish={1}
-                                        product_compare={1}
-                                        slug={data.slug}
-                                    />
+                                    <div className="">
+                                        <Product
+                                            key={index}
+                                            badge={data.discount ? true : false}
+                                            discoutn={data.discount}
+                                            product_img={data.photo}
+                                            product_name={data.product_name}
+                                            product_price={data.after_discount}
+                                            product_wish={1}
+                                            product_compare={1}
+                                            slug={data.slug}
+                                        />
+                                    </div>
                                 ))
                                     :
                                     <Product

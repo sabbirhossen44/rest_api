@@ -10,13 +10,13 @@ const Advertise = () => {
     const navigate = useNavigate()
     return (
         <>
-            <div className="mt-28">
+            <div className="md:mt-28 mt-9">
                 <Container>
-                    <Flex className="gap-10">
+                    <Flex className="md:gap-10 gap-4 md:flex-row flex-col">
                         <div className="">
                             <img src={Adve_1} alt=""  className='w-full cursor-pointer' onClick={()=> navigate('/shop')}/>
                         </div>
-                        <div className="flex flex-col gap-y-10">
+                        <div className="flex flex-col md:gap-y-10 gap-3">
                             <img src={Adve_2} alt="" className='w-full cursor-pointer' onClick={()=> navigate('/shop')}/>
                             <img src={Adve_3} alt="" className='w-full cursor-pointer' onClick={()=> navigate('/shop')}/>
                         </div>

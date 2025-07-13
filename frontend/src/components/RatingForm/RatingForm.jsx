@@ -37,7 +37,7 @@ const ReviewForm = ({ product_id, userid }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-5xl mx-20 mt-6 p-4">
+        <form onSubmit={handleSubmit} className="md:max-w-5xl md:mx-20 mx-auto mt-6 p-4">
             <h2 className="text-3xl font-semibold text-primary mb-2">Add a review</h2>
 
             {/* Star Rating */}

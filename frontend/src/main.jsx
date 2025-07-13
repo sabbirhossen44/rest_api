@@ -24,6 +24,8 @@ import ViewCart from './Pages/ViewCart.jsx'
 import Checkout from './Pages/Checkout.jsx'
 import OrderList from './Pages/Admin/OrderList.jsx'
 import PaymentPage from './Pages/PaymentPage.jsx'
+import About from './Pages/About.jsx'
+import Contact from './Pages/Contact.jsx'
 
 
 const router = createBrowserRouter(
@@ -36,6 +38,8 @@ const router = createBrowserRouter(
 
       <Route index element={<Home />} />
       <Route path='/shop' element={<Shop />} />
+      <Route path='/about' element={<About />} />
+      <Route path='/contact' element={<Contact />} />
       <Route path='/product_details/:slug' element={<Product_Details />} />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />

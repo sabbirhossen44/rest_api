@@ -36,7 +36,7 @@
 
         <nav class="sidebar">
             <div class="sidebar-header">
-                <a href="#" class="sidebar-brand">
+                <a href="{{route('dashboard')}}" class="sidebar-brand">
                     Noble<span>UI</span>
                 </a>
                 <div class="sidebar-toggler not-active">
@@ -171,6 +171,12 @@
                             <ul class="nav sub-menu">
                                 <li class="nav-item">
                                     <a href="{{route('customer.list')}}" class="nav-link">Customer List</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('customer.message')}}" class="nav-link">Customer Message</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('subscribe.list')}}" class="nav-link">Subscribe List</a>
                                 </li>
                             </ul>
                         </div>

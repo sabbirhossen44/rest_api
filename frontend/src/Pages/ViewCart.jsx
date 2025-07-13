@@ -69,12 +69,12 @@ const ViewCart = () => {
     }
   }, [cart]);
 
-  const handelCheckout = () =>{
+  const handelCheckout = () => {
     navigate('/checkout', {
-      state:{
-        coupon:coupon,
-        subtotal:subtotal,
-        total:subtotal - coupon,
+      state: {
+        coupon: coupon,
+        subtotal: subtotal,
+        total: subtotal - coupon,
       }
     })
   }
@@ -83,8 +83,8 @@ const ViewCart = () => {
     <>
       <ToastContainer />
       <div className="py-20">
-        <Container>
-          <div className="mb-10">
+        <Container className='2xl:mx-auto mx-2'>
+          <div className="mb-10 2xl:mx-auto mx-4">
             <Breadcrumbs
               title='Cart'
               link='/viewcart'
@@ -93,12 +93,12 @@ const ViewCart = () => {
           <div className="w-full">
             <table className='table-auto w-full shadow-md shadow-gray-300'>
               <thead>
-                <tr className='text-center bg-[#f5f5f5] py-5'>
-                  <th className='py-5 text-xl text-primary'>Product</th>
-                  <th className='py-5 text-xl text-primary'>Price</th>
-                  <th className='py-5 text-xl text-primary'>Quantity</th>
-                  <th className='py-5 text-xl text-primary'>Total</th>
-                  <th className='py-5 text-xl text-primary'>Action</th>
+                <tr className='text-center bg-[#f5f5f5] py-5 '>
+                  <th className='py-5 md:text-xl text-sm text-primary'>Product</th>
+                  <th className='py-5 md:text-xl text-sm text-primary md:block hidden '>Price</th>
+                  <th className='py-5 md:text-xl text-sm text-primary'>Quantity</th>
+                  <th className='py-5 md:text-xl text-sm text-primary'>Total</th>
+                  <th className='py-5 md:text-xl text-sm text-primary'>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -106,17 +106,17 @@ const ViewCart = () => {
                   cart && cart.map((data, index) => (
                     <tr key={index} className='border-b-2 text-center border-gray-100 odd:bg-white even:bg-slate-100'>
                       <td className='py-5 text-lg '>
-                        <img className='h-20 w-20 object-cover inline-block ' src={data.photo} alt="" />
+                        <img className='h-16 w-16 object-cover inline-block ' src={data.photo} alt="" />
                       </td>
-                      <td className='py-5 text-lg '>{data.cart_to_product.after_discount}</td>
-                      <td className='py-5 text-lg'>
-                        <div className="flex items-center space-x-2 gap-3 justify-center">
+                      <td className='py-5 md:text-lg text-sm md:block hidden '>{data.cart_to_product.after_discount}</td>
+                      <td className='py-5 md:text-lg text-sm'>
+                        <div className="flex items-center md:space-x-2 space-x-1 md:gap-3 gap-1 justify-center">
                           <div className="flex border rounded-md overflow-hidden">
                             <input
                               type="number"
                               readOnly
                               value={data.quantity}
-                              className='w-12 p-2 text-center focus:outline-none text-lg'
+                              className='md:w-12 w-8 md:p-2 p-1 text-center focus:outline-none md:text-lg text-sm'
                             />
                             <div className="flex flex-col">
                               <button
@@ -135,11 +135,11 @@ const ViewCart = () => {
                           </div>
                         </div>
                       </td>
-                      <td className='py-5 text-lg '>{data.cart_to_product.after_discount * data.quantity}</td>
-                      <td className='py-5 text-lg'>
+                      <td className='py-5 md:text-lg  text-sm'>{data.cart_to_product.after_discount * data.quantity}</td>
+                      <td className='py-5 md:text-lg text-sm'>
                         <button
                           onClick={() => handelDelete(data.id)}
-                          className='bg-red-600 text-white py-2 px-3 shadow-md rounded-md hover:bg-red-800'>Delete</button>
+                          className='bg-red-600 text-white md:py-2 py-1 md:px-3 px-2 shadow-md rounded-md hover:bg-red-800'>Delete</button>
                       </td>
                     </tr>
                   ))
@@ -162,9 +162,9 @@ const ViewCart = () => {
               </tfoot> */}
               <tfoot>
                 <tr>
-                  <td colSpan="5" className='py-5 px-5'>
+                  <td colSpan="5" className='py-5 md:px-5 px-3'>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center md:gap-4 gap-1">
                         <div className="flex flex-col">
                           <input
                             type="text"
@@ -178,7 +178,7 @@ const ViewCart = () => {
                         </div>
                         <button
                           type='submit'
-                          className="bg-primary text-white px-4 py-2 rounded shadow hover:bg-opacity-90"
+                          className="bg-primary text-white md:px-4 px-2 py-2 rounded md:text-base text-sm shadow hover:bg-opacity-90"
                         >
                           Apply Coupon
                         </button>

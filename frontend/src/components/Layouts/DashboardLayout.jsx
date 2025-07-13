@@ -16,9 +16,9 @@ const DashboardLayout = () => {
                             link = '/admin/dashboard'
                         />
                     </div>
-                    <div className="flex rounded-lg overflow-hidden">
+                    <div className="flex rounded-lg overflow-hidden md:flex-row flex-col">
                         <AdminSidebar />
-                        <div className="flex-1 p-6 bg-gray-100">
+                        <div className="flex-1 md:p-6 p-1 bg-gray-100">
                             <Outlet />
                         </div>
                     </div>

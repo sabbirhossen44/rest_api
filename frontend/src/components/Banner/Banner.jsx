@@ -93,7 +93,7 @@ const Banner = () => {
                         {
                             banners.map((banner) => (
                                 <div className='w-full'>
-                                    <img src={banner.photo_path} alt="" className='w-full h-[597px]' />
+                                    <img src={banner.photo_path} alt="" className='w-full md:h-[597px] h-72 object-fill' />
                                 </div>
                             ))
                         }
